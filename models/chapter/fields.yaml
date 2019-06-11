@@ -1,0 +1,13 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: 标题
+    origin:
+        label: 源内容
+        type: RainLab\Blog\FormWidgets\BlogMarkdown
+    content:
+        label: 翻译内容
+        type: RainLab\Blog\FormWidgets\BlogMarkdown

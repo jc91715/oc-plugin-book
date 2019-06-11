@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Chapter
+
+# Model Form Field configuration
+form: $/jc91715/book/models/chapter/fields.yaml
+
+# Model Class name
+modelClass: Jc91715\Book\Models\Chapter
+
+# Default redirect location
+defaultRedirect: jc91715/book/chapters
+
+# Create page
+create:
+    title: Create Chapter
+    redirect: jc91715/book/chapters/update/:id
+    redirectClose: jc91715/book/chapters
+
+# Update page
+update:
+    title: Edit Chapter
+    redirect: jc91715/book/chapters
+    redirectClose: jc91715/book/chapters
+
+# Preview page
+preview:
+    title: Preview Chapter

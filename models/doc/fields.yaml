@@ -1,0 +1,15 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: 文档名字
+
+    chapters:
+        span: full
+        path: $/jc91715/book/controllers/docs/_field_chapters.htm
+        context:
+        - update
+        - preview
+        type: partial

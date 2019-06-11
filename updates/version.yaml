@@ -1,0 +1,5 @@
+1.0.1: First version of book
+1.0.2:
+    - create table
+    - create_docs_table.php
+    - create_chapters_table.php

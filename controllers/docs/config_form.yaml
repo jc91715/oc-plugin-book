@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Doc
+
+# Model Form Field configuration
+form: $/jc91715/book/models/doc/fields.yaml
+
+# Model Class name
+modelClass: Jc91715\Book\Models\Doc
+
+# Default redirect location
+defaultRedirect: jc91715/book/docs
+
+# Create page
+create:
+    title: Create Doc
+    redirect: jc91715/book/docs/update/:id
+    redirectClose: jc91715/book/docs
+
+# Update page
+update:
+    title: Edit Doc
+    redirect: jc91715/book/docs
+    redirectClose: jc91715/book/docs
+
+# Preview page
+preview:
+    title: Preview Doc
