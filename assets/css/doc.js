@@ -22,6 +22,17 @@ jQuery(document).ready(function($){
             scrollDelta = 10,
             scrollOffset = 150
         $doc.css({'height':'877px'})
+        if(window.localStorage.getItem('if_display_sidebar')=='0'){
+            $('.col-display').hide()
+        }
+        $('.display-sidebar').click(function(){
+            $('.col-display').toggle()
+            if($('.col-display').is(':visible')){
+                window.localStorage.setItem('if_display_sidebar','1')
+            }else{
+                window.localStorage.setItem('if_display_sidebar','0')
+            }
+        })
         $('.md-content').css({'min-height':'768px', 'padding-left': '20px'})
         $(window).on('scroll', function(){
             if (!scrolling) {
