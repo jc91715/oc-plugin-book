@@ -12,6 +12,11 @@ class CreateDocsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name')->default('');
+
+            $table->longText('origin')->nullable();
+            $table->longText('origin_html')->nullable();
+            $table->longText('content')->nullable();
+            $table->longText('content_html')->nullable();
             $table->timestamps();
         });
     }

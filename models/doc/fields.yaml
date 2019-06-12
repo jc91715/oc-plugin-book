@@ -6,10 +6,22 @@ fields:
     name:
         label: 文档名字
 
-    chapters:
-        span: full
-        path: $/jc91715/book/controllers/docs/_field_chapters.htm
-        context:
-        - update
-        - preview
-        type: partial
+
+tabs:
+    fields:
+        chapters:
+            span: full
+            path: $/jc91715/book/controllers/docs/_field_chapters.htm
+            context:
+            - update
+            - preview
+            type: partial
+            tab: 章节内容
+        origin:
+            label: 源内容
+            type: RainLab\Blog\FormWidgets\BlogMarkdown
+            tab: 文档说明
+        content:
+            label: 翻译内容
+            type: RainLab\Blog\FormWidgets\BlogMarkdown
+            tab: 文档说明

@@ -1,7 +1,7 @@
 <?php namespace Jc91715\Book\Models;
 
 use Model;
-
+use Markdown;
 /**
  * doc Model
  */
@@ -40,4 +40,22 @@ class Doc extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
+
+
+    public function beforeSave()
+    {
+        $this->content_html = self::formatHtml($this->content);
+        $this->origin_html = self::formatHtml($this->origin);
+    }
+
+
+    public static function formatHtml($input, $preview = false)
+    {
+        $result = Markdown::parse(trim($input));
+
+
+        $result = str_replace('<pre>', '<pre class="prettyprint">', $result);
+
+        return $result;
+    }
 }
