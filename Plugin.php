@@ -53,6 +53,7 @@ class Plugin extends PluginBase
 
         return [
             'Jc91715\Book\Components\BookLists' => 'BookLists',
+            'Jc91715\Book\Components\BookList' => 'BookList',
         ];
     }
 
