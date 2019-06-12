@@ -42,7 +42,7 @@ class BookList extends ComponentBase
 
         $chapter_id = $this->property('chapter_id');
         $chapter =  $chapter = Chapter::where('doc_id',$doc_id)->find($chapter_id);
-        $this->page['content_html']='';
+        $this->page['content_html']=$doc->content_html;
         if($chapter){
             $this->page['content_html']=$chapter->content_html;
         }
