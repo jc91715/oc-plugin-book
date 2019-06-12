@@ -1,5 +1,6 @@
 .docs-sidebar-toc{
-    max-height: 877px;
+    max-height: 600px;
+    overflow-y: auto;
 }
 .md-content{
     min-height: 768px;
