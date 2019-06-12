@@ -1,15 +1,28 @@
 jQuery(document).ready(function($){
 
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        var $doc = $('.docs-sidebar-toc')
+        $doc.hide()
+        $('.md-content').css({'min-height':'300px'})
+        $('.display-sidebar').click(function(){
+            $doc.toggle()
+            if($doc.is(':visible')){
+                $('.display-sidebar').css({'position':'fixed','right':'10px','top':'70px'})
+            }else{
+                $('.display-sidebar').css({'position':'unset'})
+            }
 
+        })
     }else{
+
         var $doc = $('.docs-sidebar-toc'),
             scrolling = false,
             previousTop = 0,
             currentTop = 0,
             scrollDelta = 10,
             scrollOffset = 150
-
+        $doc.css({'height':'877px'})
+        $('.md-content').css({'min-height':'768px', 'padding-left': '20px'})
         $(window).on('scroll', function(){
             if (!scrolling) {
                 scrolling = true
