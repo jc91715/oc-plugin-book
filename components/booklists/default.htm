@@ -1,0 +1,16 @@
+<div data-control="docs-cacher">
+     <div class="container">
+         <div class="row ">
+             <div class="col-md-3" >
+                 <ul class="docs-sidebar-toc">
+                     {% partial 'BookLists::sidebar' chapters=chapters %}
+                 </ul>
+             </div>
+             <div class="col-md-6">
+                 <div class="md-content">
+                    {{content_html|raw}}
+                 </div>
+             </div>
+         </div>
+     </div>
+</div>

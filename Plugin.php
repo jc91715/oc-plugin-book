@@ -50,10 +50,9 @@ class Plugin extends PluginBase
      */
     public function registerComponents()
     {
-        return []; // Remove this line to activate
 
         return [
-            'Jc91715\Book\Components\MyComponent' => 'myComponent',
+            'Jc91715\Book\Components\BookLists' => 'BookLists',
         ];
     }
 

@@ -1,0 +1,13 @@
+.docs-sidebar-toc{
+    max-height: 877px;
+}
+.md-content{
+    min-height: 768px;
+}
+.is-fixed{
+    position: fixed;
+    top:0;
+}
+.fixed-top{
+    top:70px;
+}

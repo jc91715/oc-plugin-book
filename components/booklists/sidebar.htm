@@ -1,0 +1,17 @@
+<ul>
+    {% for chapter in chapters %}
+        {% if(chapter.children.count()>0) %}
+            <li class="header">
+                <h4>
+                    {{chapter.title}}
+                </h4>
+                {% partial 'BookLists::sidebar' chapters=chapter.children %}
+            </li>
+        {% else %}
+            <li class="item">
+                <a href="{{chapterPage| page({ doc_id:chapter.doc_id, chapter_id:chapter.id })}}">{{chapter.title}}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+
