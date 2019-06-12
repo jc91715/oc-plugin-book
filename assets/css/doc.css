@@ -1,9 +1,11 @@
 .docs-sidebar-toc{
     max-height: 877px;
     overflow-y: auto;
+    padding-bottom: 50px;
 }
 .md-content{
     min-height: 768px;
+    padding-left: 30px;
 }
 .is-fixed{
     position: fixed;
