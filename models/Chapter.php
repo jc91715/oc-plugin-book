@@ -58,4 +58,11 @@ class Chapter extends Model
 
         return $result;
     }
+
+    public function scopeFilterBooks($query, $books)
+    {
+        return $query->whereHas('doc', function($q) use ($books) {
+            $q->whereIn('id', $books);
+        });
+    }
 }

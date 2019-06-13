@@ -1,0 +1,21 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+
+    category:
+
+        # Filter name
+        label: 选择文档
+
+        # Model Class name
+        modelClass: Jc91715\Book\Models\Doc
+
+        # Model attribute to display for the name
+        nameFrom: name
+
+        # Apply query scope
+        scope: FilterBooks
+
+
