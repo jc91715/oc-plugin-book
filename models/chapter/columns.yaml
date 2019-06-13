@@ -6,6 +6,13 @@ columns:
     id:
         label: ID
         searchable: true
-    title:
-        label: 标题
+    doc:
+        label: 文档
+        relation: doc
+        select: name
         searchable: true
+        sortable: false
+    title:
+        label: 章节
+        searchable: true
+
