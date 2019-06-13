@@ -21,7 +21,7 @@ jQuery(document).ready(function($){
             currentTop = 0,
             scrollDelta = 10,
             scrollOffset = 150
-        $doc.css({'height':'877px'})
+        $doc.css({'max-height':'877px'})
         if(window.localStorage.getItem('if_display_sidebar')=='0'){
             $('.col-display').hide()
         }
