@@ -8,7 +8,7 @@ fields:
     origin:
         label: 源内容
         type: RainLab\Blog\FormWidgets\BlogMarkdown
-        conntext:
+        context:
             - create
     content:
         label: 翻译内容
