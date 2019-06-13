@@ -10,7 +10,7 @@ git clone https://github.com/jc91715/oc-plugin-book plugins/jc91715/book
 ## migrate
 
 ```
-php artisan migrate
+php artisan october:up
 ```
 
 ## create lists page and list page
