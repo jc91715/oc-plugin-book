@@ -55,7 +55,6 @@ class Chapter extends Model
 
         $result = str_replace('<pre>', '<pre class="prettyprint">', $result);
 
-
         return $result;
     }
 

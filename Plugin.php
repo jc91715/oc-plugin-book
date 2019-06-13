@@ -64,12 +64,16 @@ class Plugin extends PluginBase
      */
     public function registerPermissions()
     {
-        return []; // Remove this line to activate
+
 
         return [
-            'jc91715.book.some_permission' => [
+            'jc91715.book.doc' => [
                 'tab' => 'book',
-                'label' => 'Some permission'
+                'label' => 'doc'
+            ],
+            'jc91715.book.chapter' => [
+                'tab' => 'book',
+                'label' => 'chapter'
             ],
         ];
     }
@@ -88,7 +92,7 @@ class Plugin extends PluginBase
                 'label'       => 'book',
                 'url'         => Backend::url('jc91715/book/docs'),
                 'icon'        => 'icon-leaf',
-                'permissions' => ['jc91715.book.*'],
+                'permissions' => ['jc91715.book.doc'],
                 'order'       => 500,
             ],
         ];
