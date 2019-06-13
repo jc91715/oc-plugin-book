@@ -3,3 +3,8 @@
     - create table
     - create_docs_table.php
     - create_chapters_table.php
+1.0.3:
+    - soft delete table
+    - add_soft_filed_to_doc_chapter_table.php
+
+

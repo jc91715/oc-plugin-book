@@ -8,6 +8,9 @@ use Markdown;
 class Chapter extends Model
 {
     use \October\Rain\Database\Traits\NestedTree;
+    use \October\Rain\Database\Traits\SoftDelete;
+
+    protected $dates = ['deleted_at'];
     /**
      * @var string The database table used by the model.
      */
