@@ -55,7 +55,7 @@ class Translate extends ComponentBase
         }
         $this->page['user'] = $user;
         $this->page['chapter'] = $chapter;
-
+        $this->page['datavendorpath'] = asset('/modules/backend/formwidgets/codeeditor/assets/vendor/ace');
     }
 
     public function onRefresh()
