@@ -47,11 +47,16 @@ class Translate extends ComponentBase
 
 
         if($chapter->canTranslated()){
-            $chapter->user_id = $user->id;
-            $chapter->state = Chapter::STATE_TRANSLATING;
-            $chapter->claim_time = date('Y-m-d H:i:s');
-            $chapter->save();
-            $chapter->users()->attach($user->id);
+            if(Chapter::where('user_id',$user->id)->where('state',Chapter::STATE_TRANSLATING)->exists()){
+                \Flash::success('您有未完成的翻译');
+            }else{
+                $chapter->user_id = $user->id;
+                $chapter->state = Chapter::STATE_TRANSLATING;
+                $chapter->claim_time = date('Y-m-d H:i:s');
+                $chapter->save();
+                $chapter->users()->attach($user->id);
+            }
+
         }
         $this->page['user'] = $user;
         $this->page['chapter'] = $chapter;

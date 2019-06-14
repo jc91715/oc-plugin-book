@@ -5,6 +5,11 @@
 </style>
 {% endput %}
 <div class="container">
+    {% flash %}
+        <div class="alert alert-{{ type }}">
+            {{ message }}
+        </div>
+    {% endflash %}
     <h1>{{chapter.stateDesc}}</h1>
 
     {% if chapter.isTranslating() and chapter.user_id==user.id %}
