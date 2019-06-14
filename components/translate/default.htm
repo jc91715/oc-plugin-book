@@ -22,7 +22,7 @@
             <div class="control-toolbar editor-toolbar"></div>
 
             <div class="editor-write layout-cell" >
-                <textarea name="history_content" ></textarea>
+                <textarea name="history_content" >{{chapter.history_content}}</textarea>
             </div>
 
             <div class="editor-preview layout-cell"></div>
@@ -52,11 +52,7 @@
 {% put scripts %}
 {% if chapter.isTranslating() and chapter.user_id==user.id %}
 <script>
-    $(document).ready(function() {
-        var MarkdownEditor = $('[data-control=markdowneditor]').data('oc.markdownEditor');
-        MarkdownEditor.setContent('{{chapter.history_content}}');
-        MarkdownEditor.editor.focus()
-    });
+
 </script>
 {% else %}
 
