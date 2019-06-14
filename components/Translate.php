@@ -92,9 +92,11 @@ class Translate extends ComponentBase
         $state = '';
         switch ($type){
             case 1:
+                \Flash::error('保存成功');
                 $state=Chapter::STATE_TRANSLATING;
                 break;
             case 2:
+                \Flash::error('请等待后台审阅');
                 $state=Chapter::STATE_REVIEWING;
                 break;
             default:

@@ -47,3 +47,21 @@
     {% endif %}
 </div>
 
+
+
+{% put scripts %}
+{% if chapter.isTranslating() and chapter.user_id==user.id %}
+<script>
+    $(document).ready(function() {
+        var MarkdownEditor = $('[data-control=markdowneditor]').data('oc.markdownEditor');
+        MarkdownEditor.setContent('{{chapter.history_content}}');
+        MarkdownEditor.editor.focus()
+    });
+</script>
+{% else %}
+
+{% endif %}
+{% endput %}
+
+
+

@@ -78,7 +78,7 @@ class Chapter extends Model
     public function beforeSave()
     {
         if(!$this->slug){
-            $this->slug = unquid().time();
+            $this->slug = uniqid().time();
         }
         $this->content_html = self::formatHtml($this->content);
         $this->origin_html = self::formatHtml($this->origin);
