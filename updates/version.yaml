@@ -6,5 +6,9 @@
 1.0.3:
     - soft delete table
     - add_soft_filed_to_doc_chapter_table.php
-
-
+1.0.4:
+    - history
+    - add_filed_to_chapter_table.php
+1.0.5:
+    - translate user
+    - create_user_chapter_table.php

@@ -2,14 +2,29 @@
 #  Form Field Definitions
 # ===================================
 
-fields:
-    title:
-        label: 标题
-    origin:
-        label: 源内容
-        type: RainLab\Blog\FormWidgets\BlogMarkdown
-        context:
+
+tabs:
+    fields:
+        title:
+            tab: 内容
+            label: 标题
+        origin:
+            tab: 内容
+            label: 源内容
+            type: RainLab\Blog\FormWidgets\BlogMarkdown
+            context:
             - create
-    content:
-        label: 翻译内容
-        type: RainLab\Blog\FormWidgets\BlogMarkdown
+        history_content:
+            tab: 内容
+            label: 历史内容
+            type: RainLab\Blog\FormWidgets\BlogMarkdown
+        content:
+            tab: 内容
+            label: 翻译内容
+            type: RainLab\Blog\FormWidgets\BlogMarkdown
+        history:
+            tab: '修改历史'
+            label: '历史记录'
+            span: full
+            disabled: true
+            type: jc91715\Book\FormWidgets\RevisionHistory

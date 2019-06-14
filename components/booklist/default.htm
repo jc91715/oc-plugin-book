@@ -9,7 +9,12 @@
              <div class="col-md-6">
                  <p class="display-sidebar"><span class="icon-list"></span></p>
                  <div class="md-content">
-                    {{content_html|raw}}
+                     {% if content_html %}
+                        {{content_html|raw}}
+                     {% else %}
+                        {% partial 'BookList::instruction' chapters=chapters %}
+                     {% endif %}
+
                  </div>
              </div>
          </div>

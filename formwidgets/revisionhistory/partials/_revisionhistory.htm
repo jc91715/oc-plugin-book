@@ -1,0 +1,37 @@
+<div class="w_revision_history">
+  <ul>
+    <?php foreach ($history->reverse() as $record):   ?>
+      <li>
+        <a data-toggle="modal" href="#history-revision-<?php echo $record['id']?>">
+          <i class="list-icon icon-terminal"></i>
+          <span class="title"><?php echo $record['created_at']?></span>
+          <span class="description"><?php echo $record->user->first_name?> <?php echo $record->user->last_name?></span>
+          <span class="borders"></span>
+        </a>
+
+        <div class="control-popup modal fade" id="history-revision-<?php echo $record['id']?>" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><?php echo Lang::get('octoplus.wiki::fw_revisionhistory.modal.title')?></h4>
+                    </div>
+                    <div class="modal-body">
+                        <?php echo $record->getDiff()?>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"
+                        data-request="onRevertHistory"
+                        data-request-data="chapter_id: <?php echo $chapter_id?>,revision_id: <?php echo $record['id']?>"
+                        data-request-flash
+                        data-dismiss="modal">重转到这个点</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </li>
+
+    <?php endforeach; ?>
+  </ul>
+</div>

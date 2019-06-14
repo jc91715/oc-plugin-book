@@ -2,7 +2,8 @@
 
 use Backend;
 use System\Classes\PluginBase;
-
+use System\Models\Revision as Revision;
+use Jc91715\Book\Classes\Diff as Diff;
 /**
  * book Plugin Information File
  */
@@ -22,7 +23,12 @@ class Plugin extends PluginBase
             'icon'        => 'icon-leaf'
         ];
     }
-
+//    public function registerFormWidgets()
+//    {
+//        return [
+//            'Jc91715\Book\FormWidgets\RevisionHistory' => 'revisionHistory'
+//        ];
+//    }
     /**
      * Register method, called when the plugin is first registered.
      *
@@ -40,7 +46,15 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
+        Revision::extend(function($model){
+            /* Revison can access to the login user */
+            $model->belongsTo['user'] = ['RainLab\User\Models\User'];
 
+            /* Revision can use diff function */
+            $model->addDynamicMethod('getDiff', function() use ($model){
+                return Diff::toHTML(Diff::compare($model->old_value, $model->new_value));
+            });
+        });
     }
 
     /**
@@ -54,6 +68,7 @@ class Plugin extends PluginBase
         return [
             'Jc91715\Book\Components\BookLists' => 'BookLists',
             'Jc91715\Book\Components\BookList' => 'BookList',
+            'Jc91715\Book\Components\Translate' => 'Translate',
         ];
     }
 

@@ -1,0 +1,49 @@
+
+{% put styles %}
+<style>
+
+</style>
+{% endput %}
+<div class="container">
+    <h1>{{chapter.stateDesc}}</h1>
+
+    {% if chapter.isTranslating() and chapter.user_id==user.id %}
+    <form action="">
+        <input type="hidden" name="id" value="{{chapter.id}}">
+        <div
+
+            class="field-markdowneditor size-large"
+            data-control="markdowneditor"
+            data-refresh-handler="{{ __SELF__ }}::onRefresh"
+            data-view-mode="split"
+
+        >
+            <!--data-view-mode="tab"-->
+            <div class="control-toolbar editor-toolbar"></div>
+
+            <div class="editor-write layout-cell" >
+                <textarea name="history_content" ></textarea>
+            </div>
+
+            <div class="editor-preview layout-cell"></div>
+
+        </div>
+        <p></p>
+        <div class="form-group span-left text-left remove-padding-bottom">
+            <button class="btn btn-success  oc-icon-envelope" data-request-flash data-request="{{ __SELF__ }}::onSave"
+                    data-request-data="type:1" data-attach-loading>
+                保存
+            </button>
+        </div>
+        <div class="form-group span-right text-right remove-padding-bottom">
+            <button class="btn btn-success  oc-icon-envelope" data-request-flash data-request="{{ __SELF__ }}::onSave"
+                    data-request-data="type:2"  data-attach-loading>
+                提交审阅
+            </button>
+        </div>
+    </form>
+    {% else %}
+        {{chapter.history_html| raw}}
+    {% endif %}
+</div>
+

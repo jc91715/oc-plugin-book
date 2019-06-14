@@ -1,5 +1,6 @@
 <?php namespace Jc91715\Book\Components;
 
+use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
 use Jc91715\Book\Models\Doc;
 use Jc91715\Book\Models\Chapter;
@@ -27,7 +28,16 @@ class BookList extends ComponentBase
                 'description' => '',
                 'default'     => '{{ :chapter_id }}',
             ],
+            'translatePage' => [
+                'title' => '翻译页',
+                'type' => 'dropdown',
+                'default' => 'translate'
+            ]
         ];
+    }
+    public function getChapterPageOptions()
+    {
+        return Page::sortBy('baseFileName')->lists('baseFileName', 'baseFileName');
     }
     public function onRun()
     {
@@ -42,14 +52,15 @@ class BookList extends ComponentBase
 
         $chapter_id = $this->property('chapter_id');
         $chapter =  $chapter = Chapter::where('doc_id',$doc_id)->find($chapter_id);
-        $this->page['content_html']=$doc->content_html;
+//        $this->page['content_html']=$doc->content_html;
+        $this->page['content_html']='';
         if($chapter){
             $this->page['content_html']=$chapter->content_html;
         }
 //        dd($chapter->content_html);
         $chapters = $doc->chapters()->getNested();
         $this->page['chapters']=$chapters;
-
+        $this->page['translatePage']=$this->property('translatePage');
 
     }
 }
