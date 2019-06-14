@@ -49,6 +49,8 @@ class Translate extends ComponentBase
         if($chapter->canTranslated()){
             if(Chapter::where('user_id',$user->id)->where('state',Chapter::STATE_TRANSLATING)->exists()){
                 \Flash::success('您有未完成的翻译');
+            }elseif (Chapter::where('user_id',$user->id)->where('state',Chapter::STATE_REVIEWING)->get()->count()>=2){
+                \Flash::success('您有两篇正在审阅，要注意休息奥');
             }else{
                 $chapter->user_id = $user->id;
                 $chapter->state = Chapter::STATE_TRANSLATING;
