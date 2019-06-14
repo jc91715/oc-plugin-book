@@ -35,7 +35,7 @@ class BookList extends ComponentBase
             ]
         ];
     }
-    public function getChapterPageOptions()
+    public function getTranslatePageOptions()
     {
         return Page::sortBy('baseFileName')->lists('baseFileName', 'baseFileName');
     }
