@@ -16,6 +16,11 @@ tabs:
         title:
             tab: 内容
             label: 标题
+        if_total_translate:
+            tab: 内容
+            label: 是否整块翻译
+            type: checkbox
+            default: true
         origin:
             tab: 内容
             label: 源内容

@@ -16,6 +16,10 @@ class AddFiledChapterTable extends Migration
             $table->string('state')->default('');
             $table->dateTime('claim_time')->nullable();
 
+            $table->boolean('if_total_translate')->default(false);
+
+            $table->integer('section_number')->default(0);
+            $table->integer('translate_section_number')->default(0);
         });
     }
 
