@@ -94,10 +94,7 @@ class Section extends Model
     public $attachOne = [];
     public $attachMany = [];
 
-    public function creating(){
-        $this->state=self::STATE_NO_CLAIM;
-        $this->slug = uniqid().time();
-    }
+
     public function beforeSave()
     {
         if(!$this->slug){
