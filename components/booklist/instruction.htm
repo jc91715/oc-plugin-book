@@ -17,7 +17,7 @@
                         <a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug,type:state['type'] })}}">[{{state['desc']}}]</a>
                         {% endfor %}
                     {% else %}
-                        [{{chapter.stateDesc}}]
+                        [{{chapter.stateDesc}}<a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug })}}">查看</a>]
                     {% endif %}
                 {% else %}
                     <a href="{{ sectionsPage| page({  chapter_id:chapter.id })}}">[分块翻译]</a>

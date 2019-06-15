@@ -9,7 +9,8 @@
                     <a href="{{ translatePage| page({class_type:'sections',slug:section.slug,type:state['type'] })}}">[{{state['desc']}}]</a>
                 {% endfor %}
             {% else %}
-                {{section.stateDesc}}
+                {{section.stateDesc}}<a href="{{ translatePage| page({class_type:'sections',slug:section.slug })}}">[查看]</a>
+
             {% endif %}
         </div>
     </div>
