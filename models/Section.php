@@ -249,7 +249,7 @@ class Section extends Model
         $this->state = self::STATE_IMPROVING;
         $this->save();
 
-        $this->users()->syncWithoutDetaching([$user->id=>['improving'=>date('Y-m-d H:i:s'),'state'=>$this->state]]);
+        $this->users()->syncWithoutDetaching([$user->id=>['improving_time'=>date('Y-m-d H:i:s'),'state'=>$this->state]]);
         $this->recordActionHistory($user);
     }
     public function reviewSuccess($user)

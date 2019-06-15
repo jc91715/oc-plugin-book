@@ -264,7 +264,7 @@ class Chapter extends Model
         $this->state = self::STATE_IMPROVING;
         $this->save();
 
-        $this->users()->syncWithoutDetaching([$this->user_id=>['improving'=>date('Y-m-d H:i:s'),'state'=>$this->state]]);
+        $this->users()->syncWithoutDetaching([$this->user_id=>['improving_time'=>date('Y-m-d H:i:s'),'state'=>$this->state]]);
         $this->recordActionHistory($user);
     }
 
