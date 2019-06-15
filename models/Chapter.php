@@ -286,15 +286,21 @@ class Chapter extends Model
     public function recordActionHistory($user)
     {
         $historyActionString =sprintf(self::$stateActionMaps[$this->state],date('Y-m-d H:i:s'),$user->name.$user->id);
-        $pivot = $this->users()->where('user_id',$this->user_id)->first()->pivot;
-        $extra = $pivot->extra;
-        if(!$extra){
-            $extra = [];
-        }else{
-            $extra = json_decode($extra);
+
+        $usesExist = $this->users()->where('user_id',$this->user_id)->first();
+
+        if($usesExist){
+            $pivot = $usesExist->pivot;
+            $extra = $pivot->extra;
+            if(!$extra){
+                $extra = [];
+            }else{
+                $extra = json_decode($extra);
+            }
+            $extra[] = $historyActionString;
+            $pivot->extra = json_encode($extra);
+            $pivot->save();
         }
-        $extra[] = $historyActionString;
-        $pivot->extra = json_encode($extra);
-        $pivot->save();
+
     }
 }
