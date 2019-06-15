@@ -213,7 +213,7 @@ class Chapter extends Model
     }
     public function isTranslating()
     {
-        return $this->state==self::STATE_TRANSLATING;
+        return in_array($this->state,[self::STATE_TRANSLATING,self::STATE_RE_TRANSLATING,self::STATE_IMPROVING]);
     }
 
 
