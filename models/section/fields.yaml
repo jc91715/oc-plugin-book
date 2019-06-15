@@ -5,17 +5,6 @@
 
 tabs:
     fields:
-        chapters:
-            span: full
-            path: $/jc91715/book/controllers/chapters/_field_sections.htm
-            context:
-            - update
-            - preview
-            type: partial
-            tab: 分块内容
-        title:
-            tab: 内容
-            label: 标题
         origin:
             tab: 内容
             label: 源内容

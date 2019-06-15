@@ -2,6 +2,7 @@
 
 use Cms\Classes\ComponentBase;
 use Jc91715\Book\Models\Chapter;
+use Jc91715\Book\Models\Section;
 use Markdown;
 
 class Translate extends ComponentBase
@@ -32,13 +33,36 @@ class Translate extends ComponentBase
         $this->addCss('assets/css/markdowneditor.css');
 
     }
+    protected function classTypes()
+    {
+
+        return [
+            'chapters'=>Chapter::class,
+            'sections'=>Section::class,
+        ];
+    }
     public function onRun()
     {
 
         $this->addAssets();
         $slug = $this->param('slug');
 
-        $chapter = Chapter::where('slug',$slug)->first();
+        $classType = $this->param('class_type');
+        $type = $this->param('type');
+
+        $classTypes = $this->classTypes();
+        if(!isset($classTypes[$classType])){
+            abort(404);
+        }
+
+        $chapter = $classTypes[$classType];
+        $chapter = new $chapter;
+        if($type){
+            if(!$chapter->verifyType($type)){
+                abort(404);
+            }
+        }
+        $chapter = $chapter->where('slug',$slug)->first();
 
         if(!$chapter){
             abort(404);
@@ -47,16 +71,13 @@ class Translate extends ComponentBase
 
 
         if($chapter->canTranslated()){
-            if(Chapter::where('user_id',$user->id)->where('state',Chapter::STATE_TRANSLATING)->exists()){
+
+            if($chapter->hasTranslatingCount($user)>=$chapter::TRANSLATING_COUNT_LIMIT){
                 \Flash::success('您有未完成的翻译');
-            }elseif (Chapter::where('user_id',$user->id)->where('state',Chapter::STATE_REVIEWING)->get()->count()>=2){
-                \Flash::success('您有两篇正在审阅，要注意休息奥');
-            }else{
-                $chapter->user_id = $user->id;
-                $chapter->state = Chapter::STATE_TRANSLATING;
-                $chapter->claim_time = date('Y-m-d H:i:s');
-                $chapter->save();
-                $chapter->users()->attach($user->id);
+            }elseif ($chapter->hasReviewingCount($user)>=$chapter::REVIEWING_COUNT_LIMIT){
+                \Flash::success('您有翻译正在审阅，要注意休息奥');
+            } else{
+                $chapter->translating($user,$type);
             }
 
         }
@@ -85,7 +106,18 @@ class Translate extends ComponentBase
             \Flash::error('内容不能为空');
             return [];
         }
-        if(!$chapter=Chapter::find($id)){
+
+        //验证是否存在该类
+        $classType = $this->param('class_type');
+        $classTypes = $this->classTypes();
+        if(!isset($classTypes[$classType])){
+            abort(404);
+        }
+
+        $chapter = $classTypes[$classType];
+        $chapter = new $chapter;
+
+        if(!$chapter=$chapter->find($id)){
             abort(404);
         }
         if(!$chapter->isTranslating()){
@@ -99,20 +131,21 @@ class Translate extends ComponentBase
         $state = '';
         switch ($type){
             case 1:
-                \Flash::error('保存成功');
-                $state=Chapter::STATE_TRANSLATING;
+                //可不开放保存功能
+                \Flash::success('保存成功');
+                $state=$chapter::STATE_TRANSLATING;
+                $chapter->submitToSave($state,$history_content);
                 break;
             case 2:
-                \Flash::error('请等待后台审阅');
-                $state=Chapter::STATE_REVIEWING;
+                \Flash::success('请等待后台审阅');
+                $state=$chapter::STATE_REVIEWING;
+                $chapter->submitToReviewing($state,$history_content);
                 break;
             default:
                 abort(404);
                 break;
         }
-        $chapter->history_content = $history_content;
-        $chapter->state = $state;
-        $chapter->save();
+
 
         return redirect()->refresh();
 

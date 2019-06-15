@@ -2,11 +2,12 @@
 
 use Model;
 use Markdown;
+
 use RainLab\User\Models\User;
 /**
- * Chapter Model
+ * section Model
  */
-class Chapter extends Model
+class Section extends Model
 {
     use \October\Rain\Database\Traits\NestedTree;
     use \October\Rain\Database\Traits\SoftDelete;
@@ -50,10 +51,11 @@ class Chapter extends Model
     protected $dates = ['deleted_at'];
     public $revisionableLimit = 100000;
     protected $revisionable = ['history_content'];
+
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'jc91715_book_chapters';
+    public $table = 'jc91715_book_sections';
 
     /**
      * @var array Guarded fields
@@ -64,31 +66,17 @@ class Chapter extends Model
      * @var array Fillable fields
      */
     protected $fillable = [];
-
     protected $appends = ['stateDesc','stateType'];
     /**
      * @var array Relations
      */
     public $hasOne = [];
-    public $hasMany = [
-        'sections'=>Section::class,
-    ];
-    public $belongsTo = [
-        'doc'=>[
-            Doc::class,
-            'key' => 'doc_id'
-        ],
-        'user'=>[
-            User::class,
+    public $hasMany = [];
+    public $belongsTo = ['chapter'=>Chapter::class,'doc'=>Doc::class,'user'=>[
+        User::class,
 
-        ]
-    ];
-    public $belongsToMany = [
-//        'users'=>[
-//            User::class,
-//             'table' => 'jc91715_book_user_chapters'
-//        ]
-    ];
+    ]];
+    public $belongsToMany = [];
     public $morphTo = [];
     public $morphOne = [];
     public $morphMany = [
@@ -101,7 +89,7 @@ class Chapter extends Model
             'table'=> 'jc91715_book_user_chapters',
             'timestamps'=>'true',
             'pivot'=>['claim_time','submit_to_review_time','extra','state','review_id'],
-            ]
+        ]
     ];
     public $attachOne = [];
     public $attachMany = [];
@@ -111,6 +99,7 @@ class Chapter extends Model
         if(!$this->slug){
             $this->slug = uniqid().time();
         }
+
         $this->content_html = self::formatHtml($this->content);
         $this->origin_html = self::formatHtml($this->origin);
         $this->history_html = self::formatHtml($this->history_content);
@@ -127,12 +116,6 @@ class Chapter extends Model
         return $result;
     }
 
-    public function scopeFilterBooks($query, $books)
-    {
-        return $query->whereHas('doc', function($q) use ($books) {
-            $q->whereIn('id', $books);
-        });
-    }
 
     public function getRevisionableUser()
     {
@@ -150,9 +133,14 @@ class Chapter extends Model
             case '':
                 $arr[]=['type'=>self::STATE_TRANSLATING,'desc'=>'我要翻译','link'=>true];
                 break;
-            case self::STATE_UNFINISHED_TRANSLATION or self::STATE_FINISHED_TRANSLATION:
-                $arr[]=['type'=>self::STATE_RE_TRANSLATING,'desc'=>'重译','link'=>true];
+            case self::STATE_UNFINISHED_TRANSLATION:
                 $arr[]=['type'=>self::STATE_IMPROVING,'desc'=>'改进','link'=>true];
+                $arr[]=['type'=>self::STATE_RE_TRANSLATING,'desc'=>'重译','link'=>true];
+                break;
+            case self::STATE_FINISHED_TRANSLATION:
+
+                $arr[]=['type'=>self::STATE_IMPROVING,'desc'=>'改进','link'=>true];
+                $arr[]=['type'=>self::STATE_RE_TRANSLATING,'desc'=>'重译','link'=>true];
                 break;
             default:
                 break;
@@ -162,6 +150,7 @@ class Chapter extends Model
         }
         return $arr;
     }
+
     public  function verifyType($type)
     {
         return in_array($type,[self::STATE_TRANSLATING,self::STATE_RE_TRANSLATING,self::STATE_IMPROVING]);
@@ -170,11 +159,13 @@ class Chapter extends Model
     {
         return in_array($this->state,['',self::STATE_NO_CLAIM,self::STATE_FINISHED_TRANSLATION,self::STATE_UNFINISHED_TRANSLATION]);
     }
+
     public function canReview()
     {
         return $this->state==self::STATE_REVIEWING;
 
     }
+
     public function hasTranslatingCount($user)
     {
         return static::newQuery()->where('user_id',$user->id)->where('state',self::STATE_TRANSLATING)->get()->count();
@@ -186,6 +177,7 @@ class Chapter extends Model
 
     public function translating($user,$type='')
     {
+
         switch ($type){
             case self::STATE_TRANSLATING:
                 $this->startTranslating($user);
@@ -202,7 +194,7 @@ class Chapter extends Model
     }
     public function isTranslating()
     {
-        return $this->state==self::STATE_TRANSLATING;
+        return in_array($this->state,[self::STATE_TRANSLATING,self::STATE_RE_TRANSLATING,self::STATE_RE_TRANSLATING]);
     }
 
 
@@ -210,7 +202,7 @@ class Chapter extends Model
     {
         $this->user_id = $user->id;
         $this->state = self::STATE_TRANSLATING;
-        $this->claim_time = date('Y-m-d H:i:s');
+//        $this->claim_time = date('Y-m-d H:i:s');
         $this->save();
         $this->users()->syncWithoutDetaching([$user->id=>['claim_time'=>date('Y-m-d H:i:s'),'state'=>$this->state]]);
 
@@ -253,10 +245,9 @@ class Chapter extends Model
         $this->state = self::STATE_IMPROVING;
         $this->save();
 
-        $this->users()->syncWithoutDetaching([$this->user_id=>['improving'=>date('Y-m-d H:i:s'),'state'=>$this->state]]);
+        $this->users()->syncWithoutDetaching([$user->id=>['improving'=>date('Y-m-d H:i:s'),'state'=>$this->state]]);
         $this->recordActionHistory($user);
     }
-
     public function reviewSuccess($user)
     {
         $this->state=self::STATE_FINISHED_TRANSLATION;
@@ -275,7 +266,7 @@ class Chapter extends Model
     public function recordActionHistory($user)
     {
         $historyActionString =sprintf(self::$stateActionMaps[$this->state],date('Y-m-d H:i:s'),$user->name.$user->id);
-        $pivot = $this->users()->where('user_id',$this->user_id)->first()->pivot;
+        $pivot = $this->users()->where('user_id',$user->id)->first()->pivot;
         $extra = $pivot->extra;
         if(!$extra){
             $extra = [];

@@ -15,6 +15,7 @@ class AddFiledChapterTable extends Migration
             $table->string('slug')->default('');
             $table->string('state')->default('');
             $table->dateTime('claim_time')->nullable();
+
         });
     }
 

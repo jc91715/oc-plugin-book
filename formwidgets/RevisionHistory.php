@@ -3,7 +3,7 @@
 use Backend\Classes\FormField;
 use Backend\Classes\FormWidgetBase;
 use System\Models\Revision;
-use Jc91715\Book\Models\Chapter;
+use RainLab\User\Models\User;
 use Flash;
 use Input;
 use Lang;
@@ -65,6 +65,38 @@ class RevisionHistory extends FormWidgetBase
          return FormField::NO_SAVE_DATA;
      }
 
+    public function onReview()
+    {
+        $revision_id = Input::get('revision_id');
+        $section_id  = Input::get('chapter_id');
+        $state  = Input::get('state');
+
+        $history = Revision::find($revision_id);
+        $chapterClass = $history->revisionable_type;
+        $chapterClass = new $chapterClass();
+        $chapter =$chapterClass->find($section_id);
+
+        if($chapter->canReview()){
+            $user = User::find($chapter->user_id);
+            switch ($state){
+                case 'success':
+                    $chapter->reviewSuccess($user);
+                    \Flash::success('审阅成功：ok');
+                    break;
+                case 'fail':
+                    $chapter->reviewFail($user);
+                    \Flash::success('审阅失败：ok');
+                    break;
+                default:
+                    \Flash::error('请检查错误');
+                    break;
+            }
+            return ;
+        }
+        \Flash::error('状态错误');
+
+    }
+
      //
      // AJAX handlers
      //
@@ -72,12 +104,15 @@ class RevisionHistory extends FormWidgetBase
         $revision_id = Input::get('revision_id');
         $section_id  = Input::get('chapter_id');
 
-        $chapter = Chapter::find($section_id);
+
+
         $history = Revision::find($revision_id);
+        $chapterClass = $history->revisionable_type;
+         $chapterClass = new $chapterClass();
+        $chapter =$chapterClass->find($section_id);
 
 
-
-        if($this->model->revision_history()->latest('id')->first()->id==$revision_id){
+        if($chapter->revision_history()->latest('id')->first()->id==$revision_id){
             $chapter->content = $history->new_value;
         }else{
             $chapter->content = $history->new_value;
@@ -88,4 +123,6 @@ class RevisionHistory extends FormWidgetBase
 
         Flash::success('设置成功');
      }
+
+
 }

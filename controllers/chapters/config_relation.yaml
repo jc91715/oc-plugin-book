@@ -2,12 +2,12 @@
 #  Relation Behavior Config
 # ===================================
 
-chapters:
-    label: 章节
+sections:
+    label: 分块内容
     view:
-        list: $/jc91715/book/models/chapter/columns.yaml
+        list: $/jc91715/book/models/section/columns.yaml
         showSearch: true
         toolbarButtons: create|delete
     manage:
-        form: $/jc91715/book/models/chapter/doc_need_fields.yaml
+        form: $/jc91715/book/models/section/fields.yaml
         recordsPerPage: 10

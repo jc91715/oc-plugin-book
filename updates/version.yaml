@@ -12,3 +12,9 @@
 1.0.5:
     - translate user
     - create_user_chapter_table.php
+1.0.6:
+    - mormany translate user
+    - add_filed_to_user_chapter_table.php
+1.0.7:
+    - create section table
+    - create_sections_table.php

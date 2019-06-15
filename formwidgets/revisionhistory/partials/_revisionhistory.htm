@@ -5,8 +5,7 @@
         <a data-toggle="modal" href="#history-revision-<?php echo $record['id']?>">
           <i class="list-icon icon-terminal"></i>
           <span class="title"><?php echo $record['created_at']?></span>
-          <span class="description"><?php echo $record->user->first_name?> <?php echo $record->user->last_name?></span>
-          <span class="borders"></span>
+
         </a>
 
         <div class="control-popup modal fade" id="history-revision-<?php echo $record['id']?>" tabindex="-1" role="dialog">
@@ -14,17 +13,31 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"><?php echo Lang::get('octoplus.wiki::fw_revisionhistory.modal.title')?></h4>
+                        <h4 class="modal-title">操作</h4>
                     </div>
                     <div class="modal-body">
                         <?php echo $record->getDiff()?>
                     </div>
                     <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-primary"
+                                data-request="onReview"
+                                data-request-data="state:'success',chapter_id: <?php echo $chapter_id?>,revision_id: <?php echo $record['id']?>"
+                                data-request-flash
+                                data-request-confirm="确定审阅成功?"
+                                data-dismiss="modal">审阅成功</button>
+                        <button type="submit" class="btn btn-danger"
+                                data-request="onReview"
+                                data-request-data="state:'fail',chapter_id: <?php echo $chapter_id?>,revision_id: <?php echo $record['id']?>"
+                                data-request-flash
+                                data-request-confirm="确定审阅失败?"
+                                data-dismiss="modal">审阅失败</button>
                         <button type="submit" class="btn btn-primary"
                         data-request="onRevertHistory"
                         data-request-data="chapter_id: <?php echo $chapter_id?>,revision_id: <?php echo $record['id']?>"
                         data-request-flash
-                        data-dismiss="modal">重转到这个点</button>
+                        data-request-confirm="确定切向这个分支?"
+                        data-dismiss="modal">切到这个分支</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                     </div>
                 </div>

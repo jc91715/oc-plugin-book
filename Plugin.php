@@ -4,6 +4,9 @@ use Backend;
 use System\Classes\PluginBase;
 use System\Models\Revision as Revision;
 use Jc91715\Book\Classes\Diff as Diff;
+use RainLab\User\Models\User;
+use Jc91715\Book\Models\Chapter;
+
 /**
  * book Plugin Information File
  */
@@ -55,6 +58,9 @@ class Plugin extends PluginBase
                 return Diff::toHTML(Diff::compare($model->old_value, $model->new_value));
             });
         });
+        User::extend(function($model){
+            $model->morphToMany ['chapters'] = [Chapter::class,'name'=>'userable'];
+        });
     }
 
     /**
@@ -69,6 +75,7 @@ class Plugin extends PluginBase
             'Jc91715\Book\Components\BookLists' => 'BookLists',
             'Jc91715\Book\Components\BookList' => 'BookList',
             'Jc91715\Book\Components\Translate' => 'Translate',
+            'Jc91715\Book\Components\Sections' => 'Sections',
         ];
     }
 

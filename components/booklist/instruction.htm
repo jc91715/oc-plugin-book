@@ -10,7 +10,8 @@
         {% else %}
             <li class="item">
                 <a href="{{this.page.baseFileName| page({ doc_id:chapter.doc_id, chapter_id:chapter.id })}}">{{chapter.title}}</a>
-                <a href="{{ translatePage| page({  slug:chapter.slug })}}">[{{chapter.stateDesc}}]</a>
+
+                <a href="{{ sectionsPage| page({  chapter_id:chapter.id })}}">[翻译进度 todo]</a>
             </li>
         {% endif %}
     {% endfor %}

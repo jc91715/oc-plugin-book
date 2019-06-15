@@ -32,10 +32,19 @@ class BookList extends ComponentBase
                 'title' => '翻译页',
                 'type' => 'dropdown',
                 'default' => 'translate'
+            ],
+            'sectionsPage' => [
+                'title' => '分块页',
+                'type' => 'dropdown',
+                'default' => 'sections'
             ]
         ];
     }
     public function getTranslatePageOptions()
+    {
+        return Page::sortBy('baseFileName')->lists('baseFileName', 'baseFileName');
+    }
+    public function getSectionsPageOptions()
     {
         return Page::sortBy('baseFileName')->lists('baseFileName', 'baseFileName');
     }
@@ -52,15 +61,16 @@ class BookList extends ComponentBase
 
         $chapter_id = $this->property('chapter_id');
         $chapter =  $chapter = Chapter::where('doc_id',$doc_id)->find($chapter_id);
-//        $this->page['content_html']=$doc->content_html;
+
         $this->page['content_html']='';
         if($chapter){
             $this->page['content_html']=$chapter->content_html;
         }
-//        dd($chapter->content_html);
+
         $chapters = $doc->chapters()->getNested();
         $this->page['chapters']=$chapters;
         $this->page['translatePage']=$this->property('translatePage');
+        $this->page['sectionsPage']=$this->property('sectionsPage');
 
     }
 }
