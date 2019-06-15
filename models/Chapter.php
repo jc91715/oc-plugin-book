@@ -106,11 +106,17 @@ class Chapter extends Model
     public $attachOne = [];
     public $attachMany = [];
 
+
+    public function creating(){
+        $this->state=self::STATE_NO_CLAIM;
+        $this->slug = uniqid().time();
+    }
     public function beforeSave()
     {
         if(!$this->slug){
             $this->slug = uniqid().time();
         }
+
         $this->content_html = self::formatHtml($this->content);
         $this->origin_html = self::formatHtml($this->origin);
         $this->history_html = self::formatHtml($this->history_content);
@@ -148,6 +154,9 @@ class Chapter extends Model
         $arr = [];
         switch ($this->state){
             case '':
+                $arr[]=['type'=>self::STATE_TRANSLATING,'desc'=>'我要翻译','link'=>true];
+                break;
+            case self::STATE_NO_CLAIM:
                 $arr[]=['type'=>self::STATE_TRANSLATING,'desc'=>'我要翻译','link'=>true];
                 break;
             case self::STATE_UNFINISHED_TRANSLATION or self::STATE_FINISHED_TRANSLATION:

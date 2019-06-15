@@ -94,6 +94,10 @@ class Section extends Model
     public $attachOne = [];
     public $attachMany = [];
 
+    public function creating(){
+        $this->state=self::STATE_NO_CLAIM;
+        $this->slug = uniqid().time();
+    }
     public function beforeSave()
     {
         if(!$this->slug){
@@ -131,6 +135,9 @@ class Section extends Model
         $arr = [];
         switch ($this->state){
             case '':
+                $arr[]=['type'=>self::STATE_TRANSLATING,'desc'=>'我要翻译','link'=>true];
+                break;
+            case self::STATE_NO_CLAIM:
                 $arr[]=['type'=>self::STATE_TRANSLATING,'desc'=>'我要翻译','link'=>true];
                 break;
             case self::STATE_UNFINISHED_TRANSLATION:
