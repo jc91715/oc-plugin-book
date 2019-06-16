@@ -11,22 +11,27 @@
                  <div class="md-content">
                      {% if chapter %}
                          {% if chapter.if_total_translate %}
-                             <div class="row">
-                                 <button class="btn btn-primary btn-sm" type="button">
-                                     参与人数 <span class="badge">{{chapter.chapterUserCount}}</span>
-                                 </button></div>
-                                 <div class="col-md-9"> {{chapter.content_html|raw}}</div>
-                                 <div class="col-md-3">
-
+                             <div class="box-customer" >
+                                 <div class="box-left">
+                                     <button class="btn btn-primary btn-sm" type="button">
+                                         参与人数 <span class="badge">{{chapter.chapterUserCount}}</span>
+                                     </button>
+                                 </div>
+                                 <div class="box-right">
                                      {% if chapter.stateType %}
-                                     {% for state in chapter.stateType %}
-                                     <a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug,type:state['type'] })}}">[{{state['desc']}}]</a>&nbsp;&nbsp;
-                                     {% endfor %}
+                                         {% for state in chapter.stateType %}
+                                         <a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug,type:state['type'] })}}" class="btn btn-primary btn-sm active" role="button">{{state['desc']}}</a>&nbsp;&nbsp;
+                                         {% endfor %}
                                      {% else %}
-                                     [{{chapter.stateDesc}}<a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug })}}">查看</a>]
+                                        <span class="label label-primary">{{chapter.stateDesc}}</span>&nbsp;&nbsp;<a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug })}}" class="btn btn-primary btn-sm active" role="button">查看</a>
                                      {% endif %}
                                  </div>
                              </div>
+                                 <div class="row">
+                                     {{chapter.content_html|raw}}
+                                 </div>
+
+
                          {% else %}
                                 <div class="row">
                                     <div class="col-md-6"><button class="btn btn-primary btn-sm" type="button">
