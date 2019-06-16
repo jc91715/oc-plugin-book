@@ -94,19 +94,6 @@ class Section extends Model
     public $attachMany = [];
 
 
-    public static function boot()
-    {
-        parent::boot();
-
-        static::saving(function($model){
-            if($model->chapter){//同步分块数量
-                $chapter = $model->chapter;
-                $chapter->section_number = $chapter->sections()->get()->count();
-                $chapter->translate_section_number = $chapter->sections()->where('state',self::STATE_FINISHED_TRANSLATION)->get()->count();
-                $chapter->save();
-            }
-        });
-    }
 
     public function beforeSave()
     {
@@ -121,7 +108,13 @@ class Section extends Model
             }
 
         }
-
+        
+        if($this->chapter){//同步分块数量
+            $chapter = $this->chapter;
+            $chapter->section_number = $chapter->sections()->get()->count();
+            $chapter->translate_section_number = $chapter->sections()->where('state',self::STATE_FINISHED_TRANSLATION)->get()->count();
+            $chapter->save();
+        }
 
 
         $this->content_html = self::formatHtml($this->content);
