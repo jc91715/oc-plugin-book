@@ -122,7 +122,7 @@ class Section extends Model
         if($this->chapter){//同步分块数量
             $chapter = $this->chapter;
             $chapter->section_number = $chapter->sections()->get()->count();
-            $chapter->translate_section_number = $chapter->sections()->where('state',self::STATE_FINISHED_TRANSLATION)->get()->count();
+            $chapter->translate_section_number = $chapter->sections()->where('state','finished_translation')->get()->count();
             $chapter->save();
         }
     }
