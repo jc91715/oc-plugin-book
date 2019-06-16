@@ -155,6 +155,10 @@ class Chapter extends Model
     {
         return static::$stateMaps[$this->state];
     }
+    public function getRateProgressAttribute()
+    {
+        return (round($this->translate_section_number/$this->section_number)*100).'%';
+    }
     public function getStateTypeAttribute()
     {
         $arr = [];

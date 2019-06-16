@@ -14,13 +14,13 @@
                 {% if chapter.if_total_translate %}
                     {% if chapter.stateType %}
                         {% for state in chapter.stateType %}
-                        <a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug,type:state['type'] })}}">[{{state['desc']}}]</a>
+                        <a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug,type:state['type'] })}}">[{{state['desc']}}]</a>&nbsp;&nbsp;
                         {% endfor %}
                     {% else %}
                         [{{chapter.stateDesc}}<a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug })}}">查看</a>]
                     {% endif %}
                 {% else %}
-                    <a href="{{ sectionsPage| page({  chapter_id:chapter.id })}}">[分块翻译]</a>
+                    <a href="{{ sectionsPage| page({  chapter_id:chapter.id })}}">[分块翻译]&nbsp;&nbsp;[进度 {{chapter.rateProgress}}]</a>
                 {% endif %}
 
             </li>
