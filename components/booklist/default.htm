@@ -53,22 +53,25 @@
                                  <div class="col-md-8">{{section.content_html | raw}}</div>
                                  <div class="col-md-4">
 
-                                         <button class="btn btn-primary btn-sm" type="button">
-                                             第<span class="badge">{{key+1}}</span>分块
-                                         </button>
-                                         <button class="btn btn-primary btn-sm" type="button">
-                                             参与人数 <span class="badge">{{section.users().count()}}</span>
-                                         </button></div>
-
                                      {% if section.stateType %}
                                          {% for state in section.stateType %}
-                                         <a href="{{ translatePage| page({class_type:'sections',slug:section.slug,type:state['type'] })}}">[{{state['desc']}}]</a>
+                                         <a href="{{ translatePage| page({class_type:'sections',slug:section.slug,type:state['type'] })}}" class="btn btn-primary btn-sm active" role="button">{{state['desc']}}</a>
                                          {% endfor %}
                                      {% else %}
-                                        {{section.stateDesc}}<a href="{{ translatePage| page({class_type:'sections',slug:section.slug })}}">[查看]</a>
+                                         <span class="label label-primary">{{section.stateDesc}}</span>
+                                            <br>
+                                         <a href="{{ translatePage| page({class_type:'sections',slug:section.slug })}}" class="btn btn-primary btn-sm active" role="button">查看</a>
 
-                                     {% endif %}
-                                 </div>
+                                         {% endif %}
+
+                                     <button class="btn btn-primary btn-sm" type="button">
+                                         第<span class="badge">{{key+1}}</span>分块
+                                     </button>
+                                     <button class="btn btn-primary btn-sm" type="button">
+                                         参与人数 <span class="badge">{{section.users().count()}}</span>
+                                     </button></div>
+
+                             </div>
                              </div>
                              {% endfor %}
 
