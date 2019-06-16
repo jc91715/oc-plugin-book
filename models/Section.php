@@ -213,9 +213,12 @@ class Section extends Model
     public function translating($user,$type='')
     {
 
+
         switch ($type){
             case self::STATE_TRANSLATING:
-                $this->startTranslating($user);
+                if(!$this->state||$this->state==self::STATE_NO_CLAIM){//审阅成功或失败传STATE_TRANSLATING限制进入这里。
+                    $this->startTranslating($user);
+                }
                 break;
             case self::STATE_IMPROVING:
                 $this->startImproving($user);
