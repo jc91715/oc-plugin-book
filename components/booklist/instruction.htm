@@ -21,11 +21,11 @@
                         [{{chapter.stateDesc}}<a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug })}}">查看</a>]
                     {% endif %}
                 {% else %}
-                    <div class="row" style="height: 30px;">
-                        <div class="col-md-2">
+                    <div class="box-customer" >
+                        <div class="box-left">
                             <a href="{{this.page.baseFileName| page({ doc_id:chapter.doc_id, chapter_id:chapter.id })}}">{{chapter.title}}</a>
                         </div>
-                        <div class="col-md-5">
+                        <div class="box-right">
                             <div class="progress">
                                 <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{chapter.rateProgress}};">
                                     {{chapter.rateProgress}}

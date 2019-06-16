@@ -18,3 +18,13 @@
 .docs-cacher .header, .item{
     list-style: none;
 }
+.box-customer{
+    display: flex;
+    width: 100%;
+}
+.box-customer .box-left{
+    flex-basis: 50%;
+}
+.box-customer .box-right{
+    flex: 1;
+}
