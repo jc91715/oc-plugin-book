@@ -157,6 +157,9 @@ class Chapter extends Model
     }
     public function getRateProgressAttribute()
     {
+        if(!$this->section_number){
+            return '0%';
+        }
         return (round($this->translate_section_number/$this->section_number)*100).'%';
     }
     public function getStateTypeAttribute()
