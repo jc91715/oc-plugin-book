@@ -155,6 +155,19 @@ class Chapter extends Model
     {
         return static::$stateMaps[$this->state];
     }
+    public function getChapterUserCountAttribute()
+    {
+        return  $this->users()->get()->count();
+    }
+    public function getSectionUserCountAttribute()
+    {
+        $count=0;
+        $sections =  $this->sections()->with('users')->whereHas('users')->get();
+        $sections->each(function($section)use(&$count){
+            $count+=$section->users->count();
+        });
+        return $count;
+    }
     public function getRateProgressAttribute()
     {
         if(!$this->section_number){

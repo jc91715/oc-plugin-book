@@ -12,6 +12,9 @@
                      {% if chapter %}
                          {% if chapter.if_total_translate %}
                              <div class="row">
+                                 <button class="btn btn-primary btn-sm" type="button">
+                                     参与人数 <span class="badge">{{chapter.chapterUserCount}}</span>
+                                 </button></div>
                                  <div class="col-md-9"> {{chapter.content_html|raw}}</div>
                                  <div class="col-md-3">
 
@@ -27,15 +30,32 @@
                          {% else %}
                              {% for section in chapter.sections %}
                              <div class="row">
+                                 <div class="col-md-6"><button class="btn btn-primary btn-sm" type="button">
+                                     分块数量 <span class="badge">{{chapter.section_number}}</span>
+                                 </button>
+                                     <button class="btn btn-primary btn-sm" type="button">
+                                         已翻译块数量 <span class="badge">{{chapter.translate_section_number}}</span>
+                                     </button>
+                                     <button class="btn btn-primary btn-sm" type="button">
+                                         参与人数 <span class="badge">{{chapter.sectionUserCount}}</span>
+                                     </button></div>
+                                 <div class="col-md-6">
+                                     <div class="progress">
+                                         <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{chapter.rateProgress}};">
+                                             {{chapter.rateProgress}}
+                                         </div>
+                                     </div>
+                                 </div>
+
                                  <div class="col-md-9">{{section.content_html | raw}}</div>
                                  <div class="col-md-3">
 
                                      {% if section.stateType %}
-                                     {% for state in section.stateType %}
-                                     <a href="{{ translatePage| page({class_type:'sections',slug:section.slug,type:state['type'] })}}">[{{state['desc']}}]</a>
-                                     {% endfor %}
+                                         {% for state in section.stateType %}
+                                         <a href="{{ translatePage| page({class_type:'sections',slug:section.slug,type:state['type'] })}}">[{{state['desc']}}]</a>
+                                         {% endfor %}
                                      {% else %}
-                                     {{section.stateDesc}}<a href="{{ translatePage| page({class_type:'sections',slug:section.slug })}}">[查看]</a>
+                                        {{section.stateDesc}}<a href="{{ translatePage| page({class_type:'sections',slug:section.slug })}}">[查看]</a>
 
                                      {% endif %}
                                  </div>
