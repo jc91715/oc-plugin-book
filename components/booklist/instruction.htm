@@ -21,7 +21,7 @@
                         [{{chapter.stateDesc}}<a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug })}}">查看</a>]
                     {% endif %}
                 {% else %}
-
+                    <div class="row" style="height: 30px;">
                         <div class="col-md-2">
                             <a href="{{this.page.baseFileName| page({ doc_id:chapter.doc_id, chapter_id:chapter.id })}}">{{chapter.title}}</a>
                         </div>
@@ -32,7 +32,7 @@
                                 </div>
                             </div>
                         </div>
-
+                    </div>
 
                 {% endif %}
 
