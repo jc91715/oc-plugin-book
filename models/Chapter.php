@@ -186,7 +186,6 @@ class Chapter extends Model
                 $arr[]=['type'=>self::STATE_TRANSLATING,'desc'=>'我要翻译','link'=>true];
                 break;
             case self::STATE_UNFINISHED_TRANSLATION:
-                $arr[]=['type'=>self::STATE_IMPROVING,'desc'=>'改进','link'=>true];
                 $arr[]=['type'=>self::STATE_RE_TRANSLATING,'desc'=>'重译','link'=>true];
                 break;
             case self::STATE_FINISHED_TRANSLATION:
