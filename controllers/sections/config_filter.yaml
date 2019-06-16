@@ -4,7 +4,7 @@
 
 scopes:
 
-    doc:
+    category:
 
         # Filter name
         label: 选择文档
@@ -17,7 +17,19 @@ scopes:
 
         # Apply query scope
         scope: FilterBooks
+    chapter:
 
+        # Filter name
+        label: 选择章节
+
+        # Model Class name
+        modelClass: Jc91715\Book\Models\Chapter
+
+        # Model attribute to display for the name
+        nameFrom: title
+
+        # Apply query scope
+        scope: FilterChapters
     state:
         label: 状态
         type: group

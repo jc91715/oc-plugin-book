@@ -15,6 +15,13 @@ columns:
     title:
         label: 章节
         searchable: true
+    if_total_translate:
+        label: 是否整块翻译
+    section_number:
+        label: 分块数量
+    translate_section_number:
+        label: 已完成的分块数量
+
 
 
 

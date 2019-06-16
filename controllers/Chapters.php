@@ -26,6 +26,7 @@ class Chapters extends Controller
 
         BackendMenu::setContext('Jc91715.Book', 'book', 'docs');
     }
+
     public function index()
     {
         $this->asExtension('ListController')->index();

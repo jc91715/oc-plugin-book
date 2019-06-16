@@ -116,6 +116,27 @@ class Plugin extends PluginBase
                 'icon'        => 'icon-leaf',
                 'permissions' => ['jc91715.book.doc'],
                 'order'       => 500,
+
+                'sideMenu' => [
+                    'docs' => [
+                        'label'       => '文档列表',
+                        'icon'        => 'icon-list-ul',
+                        'url'         => Backend::url('jc91715/book/docs'),
+                        'permissions' => ['jc91715.book.*']
+                    ],
+                    'chapters' => [
+                        'label'       => '章节列表',
+                        'icon'        => 'icon-list-ul',
+                        'url'         => Backend::url('jc91715/book/chapters'),
+                        'permissions' => ['jc91715.book.*']
+                    ],
+                    'sections' => [
+                        'label'       => '分块列表',
+                        'icon'        => 'icon-list-ul',
+                        'url'         => Backend::url('jc91715/book/sections'),
+                        'permissions' => ['jc91715.book.*']
+                    ]
+                ]
             ],
         ];
     }

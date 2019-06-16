@@ -6,3 +6,14 @@ columns:
     id:
         label: ID
         searchable: true
+    doc_name:
+        label: 所属文档
+        relation: doc
+        select: name
+    chapter_title:
+        label: 所属章节
+        relation: chapter
+        select: title
+
+
+

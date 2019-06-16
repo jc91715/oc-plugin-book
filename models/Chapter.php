@@ -72,6 +72,10 @@ class Chapter extends Model
     public $hasOne = [];
     public $hasMany = [
         'sections'=>Section::class,
+        'sections_count' => [
+            Section::class,
+            'count'=>true
+        ]
     ];
     public $belongsTo = [
         'doc'=>[
@@ -108,11 +112,13 @@ class Chapter extends Model
 
 
 
+
     public function beforeSave()
     {
         if(!$this->slug){
             $this->slug = uniqid().time();
         }
+
 
         $this->content_html = self::formatHtml($this->content);
         $this->origin_html = self::formatHtml($this->origin);
@@ -129,7 +135,10 @@ class Chapter extends Model
 
         return $result;
     }
-
+    public function getSectionCountAttribute()
+    {
+        return optional($this->sections()->get())->count() ?? 0;
+    }
     public function scopeFilterBooks($query, $books)
     {
         return $query->whereHas('doc', function($q) use ($books) {

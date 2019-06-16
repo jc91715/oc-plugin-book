@@ -56,7 +56,6 @@ class Section extends Model
      * @var string The database table used by the model.
      */
     public $table = 'jc91715_book_sections';
-
     /**
      * @var array Guarded fields
      */
@@ -95,11 +94,35 @@ class Section extends Model
     public $attachMany = [];
 
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function($model){
+            if($model->chapter){//同步分块数量
+                $chapter = $model->chapter;
+                $chapter->section_number = $chapter->sections()->get()->count();
+                $chapter->translate_section_number = $chapter->sections()->where('state',self::STATE_FINISHED_TRANSLATION)->get()->count();
+                $chapter->save();
+            }
+        });
+    }
+
     public function beforeSave()
     {
+
+
         if(!$this->slug){
             $this->slug = uniqid().time();
         }
+        if(!$this->doc_id){
+            if($this->chapter){
+                $this->doc_id = $this->chapter->doc_id;
+            }
+
+        }
+
+
 
         $this->content_html = self::formatHtml($this->content);
         $this->origin_html = self::formatHtml($this->origin);
@@ -117,7 +140,18 @@ class Section extends Model
         return $result;
     }
 
-
+    public function scopeFilterBooks($query, $books)
+    {
+        return $query->whereHas('doc', function($q) use ($books) {
+            $q->whereIn('id', $books);
+        });
+    }
+    public function scopeFilterChapters($query, $chapters)
+    {
+        return $query->whereHas('chapters', function($q) use ($chapters) {
+            $q->whereIn('id', $chapters);
+        });
+    }
     public function getRevisionableUser()
     {
         return $this->user_id;
