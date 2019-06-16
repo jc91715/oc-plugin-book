@@ -173,7 +173,7 @@ class Chapter extends Model
         if(!$this->section_number){
             return '0%';
         }
-        return (round($this->translate_section_number/$this->section_number)*100).'%';
+        return (round($this->translate_section_number/$this->section_number,2)*100).'%';
     }
     public function getStateTypeAttribute()
     {
