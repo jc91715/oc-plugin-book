@@ -56,13 +56,17 @@
                                      {% if section.stateType %}
                                          {% for state in section.stateType %}
                                          <a href="{{ translatePage| page({class_type:'sections',slug:section.slug,type:state['type'] })}}" class="btn btn-primary btn-sm active" role="button">{{state['desc']}}</a>
-                                         {% endfor %}
+                                        {% endfor %}
+                                         <br>
+                                         <br>
                                      {% else %}
                                          <span class="label label-primary">{{section.stateDesc}}</span>
+                                            <br>
                                             <br>
                                          <a href="{{ translatePage| page({class_type:'sections',slug:section.slug })}}" class="btn btn-primary btn-sm active" role="button">查看</a>
 
                                          {% endif %}
+                                     <br>
                                      <br>
                                      <button class="btn btn-primary btn-sm" type="button">
                                          第<span class="badge">{{key+1}}</span>分块
