@@ -51,7 +51,7 @@
                                         </div>
                                     </div>
                                 </div>
-                             {% for key,section in chapter.sections %}
+                             {% for key,section in chapter.sections().oldest('id').get() %}
                              <div class="row">
 
 
