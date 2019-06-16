@@ -28,27 +28,37 @@
                                  </div>
                              </div>
                          {% else %}
-                             {% for section in chapter.sections %}
+                                <div class="row">
+                                    <div class="col-md-6"><button class="btn btn-primary btn-sm" type="button">
+                                        总分块数量 <span class="badge">{{chapter.section_number}}</span>
+                                    </button>
+                                        <button class="btn btn-primary btn-sm" type="button">
+                                            已翻译分块<span class="badge">{{chapter.translate_section_number}}</span>
+                                        </button>
+                                        <button class="btn btn-primary btn-sm" type="button">
+                                            参与总人数 <span class="badge">{{chapter.sectionUserCount}}</span>
+                                        </button></div>
+                                    <div class="col-md-6">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{chapter.rateProgress}};">
+                                                {{chapter.rateProgress}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             {% for key,section in chapter.sections %}
                              <div class="row">
-                                 <div class="col-md-6"><button class="btn btn-primary btn-sm" type="button">
-                                     分块数量 <span class="badge">{{chapter.section_number}}</span>
-                                 </button>
-                                     <button class="btn btn-primary btn-sm" type="button">
-                                         已翻译块数量 <span class="badge">{{chapter.translate_section_number}}</span>
-                                     </button>
-                                     <button class="btn btn-primary btn-sm" type="button">
-                                         参与人数 <span class="badge">{{chapter.sectionUserCount}}</span>
-                                     </button></div>
-                                 <div class="col-md-6">
-                                     <div class="progress">
-                                         <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{chapter.rateProgress}};">
-                                             {{chapter.rateProgress}}
-                                         </div>
-                                     </div>
-                                 </div>
 
-                                 <div class="col-md-9">{{section.content_html | raw}}</div>
-                                 <div class="col-md-3">
+
+                                 <div class="col-md-8">{{section.content_html | raw}}</div>
+                                 <div class="col-md-4">
+
+                                         <button class="btn btn-primary btn-sm" type="button">
+                                             第<span class="badge">{{key+1}}</span>分块
+                                         </button>
+                                         <button class="btn btn-primary btn-sm" type="button">
+                                             参与人数 <span class="badge">{{section.users().count()}}</span>
+                                         </button></div>
 
                                      {% if section.stateType %}
                                          {% for state in section.stateType %}
