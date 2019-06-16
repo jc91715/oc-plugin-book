@@ -22,7 +22,7 @@
                             <a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug,type:state['type'] })}}" class="btn btn-primary btn-sm active" role="button">{{state['desc']}}</a>&nbsp;&nbsp;
                             {% endfor %}
                             {% else %}
-                            <span class="label label-primary">{{chapter.stateDesc}}</span><a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug })}}" class="btn btn-primary btn-sm active" role="button">查看</a>]
+                            <span class="label label-primary">{{chapter.stateDesc}}</span>&nbsp;&nbsp;<a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug })}}" class="btn btn-primary btn-sm active" role="button">查看</a>
                             {% endif %}
                         </div>
                     </div>
