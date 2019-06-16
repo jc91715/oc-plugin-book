@@ -9,9 +9,10 @@
             </li>
         {% else %}
             <li class="item">
-                <a href="{{this.page.baseFileName| page({ doc_id:chapter.doc_id, chapter_id:chapter.id })}}">{{chapter.title}}</a>
+
 
                 {% if chapter.if_total_translate %}
+                    <a href="{{this.page.baseFileName| page({ doc_id:chapter.doc_id, chapter_id:chapter.id })}}">{{chapter.title}}</a>
                     {% if chapter.stateType %}
                         {% for state in chapter.stateType %}
                         <a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug,type:state['type'] })}}">[{{state['desc']}}]</a>&nbsp;&nbsp;
@@ -20,7 +21,19 @@
                         [{{chapter.stateDesc}}<a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug })}}">查看</a>]
                     {% endif %}
                 {% else %}
-                     <a href="{{this.page.baseFileName| page({ doc_id:chapter.doc_id, chapter_id:chapter.id })}}">[分块翻译]&nbsp;&nbsp;[进度 {{chapter.rateProgress}}]</a>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <a href="{{this.page.baseFileName| page({ doc_id:chapter.doc_id, chapter_id:chapter.id })}}">{{chapter.title}}</a>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{chapter.rateProgress}};">
+                                    {{chapter.rateProgress}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 {% endif %}
 
             </li>
