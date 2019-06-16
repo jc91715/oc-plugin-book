@@ -24,7 +24,7 @@ class Chapters extends Controller
     {
         parent::__construct();
 
-        BackendMenu::setContext('Jc91715.Book', 'book', 'docs');
+        BackendMenu::setContext('Jc91715.Book', 'book', 'chapters');
     }
 
     public function index()
