@@ -70,7 +70,7 @@ class BookList extends ComponentBase
         $chapters = $doc->chapters()->getNested();
         $this->page['chapters']=$chapters;
         $this->page['translatePage']=$this->property('translatePage');
-        $this->page['sectionsPage']=$this->property('sectionsPage');
+        $this->page['sectionsPage']=$this->property('sectionsPage');//没有用到
 
     }
 }
