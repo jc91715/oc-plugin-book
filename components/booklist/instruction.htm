@@ -12,14 +12,22 @@
 
 
                 {% if chapter.if_total_translate %}
-                    <a href="{{this.page.baseFileName| page({ doc_id:chapter.doc_id, chapter_id:chapter.id })}}">{{chapter.title}}</a>
-                    {% if chapter.stateType %}
-                        {% for state in chapter.stateType %}
-                        <a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug,type:state['type'] })}}">[{{state['desc']}}]</a>&nbsp;&nbsp;
-                        {% endfor %}
-                    {% else %}
-                        [{{chapter.stateDesc}}<a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug })}}">查看</a>]
-                    {% endif %}
+                    <div class="box-customer" >
+                        <div class="box-left">
+                            <a href="{{this.page.baseFileName| page({ doc_id:chapter.doc_id, chapter_id:chapter.id })}}">{{chapter.title}}</a>
+                        </div>
+                        <div class="box-right">
+                            {% if chapter.stateType %}
+                            {% for state in chapter.stateType %}
+                            <a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug,type:state['type'] })}}" class="btn btn-primary btn-sm active" role="button">{{state['desc']}}</a>&nbsp;&nbsp;
+                            {% endfor %}
+                            {% else %}
+                            <span class="label label-primary">{{chapter.stateDesc}}</span><a href="{{ translatePage| page({class_type:'chapters',slug:chapter.slug })}}" class="btn btn-primary btn-sm active" role="button">查看</a>]
+                            {% endif %}
+                        </div>
+                    </div>
+
+
                 {% else %}
                     <div class="box-customer" >
                         <div class="box-left">
