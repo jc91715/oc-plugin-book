@@ -2,12 +2,13 @@
 
 use BackendMenu;
 use Backend\Classes\Controller;
-
+use Jc91715\Book\Models\Chapter;
 /**
  * Chapters Back-end Controller
  */
 class Chapters extends Controller
 {
+    public $showTree=true;
     public $implement = [
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController',
@@ -18,8 +19,7 @@ class Chapters extends Controller
     public $formConfig = 'config_form.yaml';
     public $listConfig = [
 
-        'chapters' => 'config_list.yaml',
-        'chapters_tree' => 'config_list_tree.yaml',
+        'chapters' => 'config_list.yaml'
     ];
 //    public $listConfig = 'config_list.yaml';
     public $relationConfig = 'config_relation.yaml';
@@ -27,8 +27,13 @@ class Chapters extends Controller
     public $requiredPermissions = ['jc91715.book.chapter'];
     public function __construct()
     {
+
         parent::__construct();
 
+//        if(request()->input('scopeName')=='showTree'){
+//            $this->showTrue =request()->input('value');
+//            unset(request()['scopeName']);
+//        }
         BackendMenu::setContext('Jc91715.Book', 'book', 'chapters');
     }
 
@@ -68,4 +73,52 @@ class Chapters extends Controller
             abort(404);
         }
     }
+    public function listFilterExtendScopes($scope)
+    {
+
+        if($scope->config->alias=='chaptersFilter'){
+            $scopes = $scope->getScopes();
+            $treeScope = $scopes['showTree'];
+            if(request()->input('scopeName')=='showTree'){
+                $scope->setScopeValue('showTree',request()->input('value'));
+            }
+
+            if($widget=$this->listGetWidget('chapters')){
+
+                if( $treeScope->value){
+
+                    $widget->showTree = true;
+                    $widget->showSorting = true;
+                    $widget->showPagination = false;
+                }else{
+
+                    $widget->showTree = false;
+                    $widget->showSorting = false;
+                    $widget->showPagination = false;
+
+                }
+
+
+            }
+        }
+
+
+
+
+    }
+    public function listExtendColumns($widget)
+    {
+
+//        $widget->showTree = false;
+//        $widget->showSorting = false;
+//        $widget->showPagination = false;
+//
+//
+//        $widget->showTree = true;
+//        $widget->showSorting = true;
+//        $widget->showPagination = false;
+
+
+    }
+
 }

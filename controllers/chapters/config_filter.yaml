@@ -4,6 +4,11 @@
 
 scopes:
 
+    showTree:
+        label: Tree
+        type: switch
+
+
     doc:
 
         # Filter name
@@ -30,6 +35,5 @@ scopes:
             finished_translation: 翻译已完成
             re_translating: 正在重译中...
             improving: 正在改进中...
-
 
 
