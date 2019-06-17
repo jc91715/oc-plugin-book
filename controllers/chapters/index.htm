@@ -1,2 +1,17 @@
 
-<?= $this->listRender() ?>
+
+<div class="control-tabs content-tabs tabs-flush" data-control="tab">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#chapters_tree">章节列表</a></li>
+        <li><a href="#chapters">章节列表（tree）</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active">
+            <?= $this->listRender('chapters') ?>
+        </div>
+        <div class="tab-pane">
+            <?= $this->listRender('chapters_tree') ?>
+        </div>
+    </div>
+</div>
+
