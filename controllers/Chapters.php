@@ -85,7 +85,7 @@ class Chapters extends Controller
 
             if($widget=$this->listGetWidget('chapters')){
 
-                if( $treeScope->value){
+                if( $treeScope->value=='true'){
 
                     $widget->showTree = true;
                     $widget->showSorting = true;
