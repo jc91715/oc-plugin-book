@@ -18,6 +18,8 @@ class Chapter extends Model
     const REVIEWING_COUNT_LIMIT=2;
     //正在重译的数量
     const RE_TRANSLATING_COUNT_LIMIT=1;
+    //正在改进的数量
+    const IMPROVING_COUNT_LIMIT=1;
 
     const STATE_NO_CLAIM='no_claim';
     const STATE_TRANSLATING='translating';
@@ -227,6 +229,10 @@ class Chapter extends Model
     public function hasReTranslatingCount($user)
     {
         return static::newQuery()->where('user_id',$user->id)->where('state',self::STATE_RE_TRANSLATING)->get()->count();
+    }
+    public function hasImprovingCount($user)
+    {
+        return static::newQuery()->where('user_id',$user->id)->where('state',self::STATE_IMPROVING)->get()->count();
     }
     public function translating($user,$type='')
     {
