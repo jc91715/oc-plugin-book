@@ -75,7 +75,9 @@ class Translate extends ComponentBase
             if($chapter->hasTranslatingCount($user)>=$chapter::TRANSLATING_COUNT_LIMIT){
                 \Flash::success('您有未完成的翻译');
             }elseif ($chapter->hasReviewingCount($user)>=$chapter::REVIEWING_COUNT_LIMIT){
-                \Flash::success('您有翻译正在审阅，要注意休息奥');
+                \Flash::success('您有翻译正在审阅...要注意休息奥');
+            }elseif ($chapter->hasReTranslatingCount($user)>=$chapter::RE_TRANSLATING_COUNT_LIMIT){
+                \Flash::success('您有翻译正在重译...');
             } else{
                 $chapter->translating($user,$type);
             }
