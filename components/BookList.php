@@ -60,11 +60,13 @@ class BookList extends ComponentBase
         }
 
         $chapter_id = $this->property('chapter_id');
-        $chapter =  $chapter = Chapter::where('doc_id',$doc_id)->find($chapter_id);
+        $chapter =  $chapter = Chapter::where('doc_id',$doc_id)->with(['sections'=>function($q){
+            $q->oldest('id')->with('users');
+        },'users'])->find($chapter_id);
 
         $this->page['chapter']='';
         if($chapter){
-            $this->page['chapter']=$chapter->load(['sections.users','users']);
+            $this->page['chapter']=$chapter;
         }
 
         $chapters = $doc->chapters()->getNested();
