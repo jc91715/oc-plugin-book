@@ -64,7 +64,7 @@ class BookList extends ComponentBase
 
         $this->page['chapter']='';
         if($chapter){
-            $this->page['chapter']=$chapter;
+            $this->page['chapter']=$chapter->load(['sections.users','users']);
         }
 
         $chapters = $doc->chapters()->getNested();

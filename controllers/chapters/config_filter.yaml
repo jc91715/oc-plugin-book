@@ -35,5 +35,9 @@ scopes:
             finished_translation: 翻译已完成
             re_translating: 正在重译中...
             improving: 正在改进中...
-
+    title:
+        label: 标题
+        type: text
+        conditions: title = :value
+        size: 2
 
