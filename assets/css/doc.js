@@ -21,7 +21,7 @@ jQuery(document).ready(function($){
             currentTop = 0,
             scrollDelta = 10,
             scrollOffset = 150
-        $doc.css({'max-height':'877px'})
+        // $doc.css({'max-height':'877px'})
         if(window.localStorage.getItem('if_display_sidebar')=='0'){
             $('.col-display').hide()
         }
@@ -33,7 +33,8 @@ jQuery(document).ready(function($){
                 window.localStorage.setItem('if_display_sidebar','0')
             }
         })
-        $('.md-content').css({'min-height':'768px', 'padding-left': '20px'})
+        // $('.md-content').css({'min-height':'768px', 'padding-left': '20px'})
+        $('.md-content').css({'padding-left': '20px'})
         $(window).on('scroll', function(){
             if (!scrolling) {
                 scrolling = true
@@ -52,16 +53,16 @@ jQuery(document).ready(function($){
 
             // Scrolling up
             if (previousTop - currentTop > scrollDelta) {
-                // $doc.removeClass('is-fixed')
-                $doc.addClass('fixed-top')
+
+                // $doc.addClass('fixed-top')
             }
             else if (currentTop - previousTop > scrollDelta && currentTop > scrollOffset) {
                 // Scrolling down
-                $doc.addClass('is-fixed')
+                // $doc.addClass('is-fixed')
                 $doc.removeClass('fixed-top')
             }
             if (currentTop<50) {
-                $doc.removeClass('is-fixed')
+                // $doc.removeClass('is-fixed')
             }
             previousTop = currentTop
             scrolling = false
