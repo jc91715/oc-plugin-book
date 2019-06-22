@@ -243,7 +243,7 @@ class Section extends Model
     }
     public function isTranslating()
     {
-        return in_array($this->state,[self::STATE_TRANSLATING,self::STATE_RE_TRANSLATING,self::STATE_RE_TRANSLATING]);
+        return in_array($this->state,[self::STATE_TRANSLATING,self::STATE_RE_TRANSLATING,self::STATE_IMPROVING]);
     }
 
 
