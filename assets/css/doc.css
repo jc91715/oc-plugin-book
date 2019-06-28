@@ -29,3 +29,6 @@
 .box-customer .box-right{
     flex: 1;
 }
+.docs-cacher img{
+    width: 100%;
+}
