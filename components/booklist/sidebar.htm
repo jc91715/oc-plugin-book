@@ -9,7 +9,7 @@
             </li>
         {% else %}
             <li class="item">
-                <a href="{{this.page.baseFileName| page({ doc_id:chapter.doc_id, chapter_id:chapter.id })}}">{{chapter.title}}</a>
+                <a href="{{this.page.baseFileName| page({ doc_id:chapter.doc_id, chapter_id:chapter.id })}}"  {% if this.param.chapter_id==chapter.id %} style="color:#bf5329"  {% endif %}>{{chapter.title}}</a>
             </li>
         {% endif %}
     {% endfor %}
