@@ -31,7 +31,7 @@ class BookLists extends ComponentBase
     }
     public function onRun()
     {
-        $docs = Doc::latest('id')->get();
+        $docs = Doc::oldest('id')->get();
         $this->page['docs'] = $docs;
         $this->page['chapterPage']=$this->property('chapterPage');
     }
