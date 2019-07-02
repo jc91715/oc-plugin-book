@@ -61,4 +61,10 @@ class Doc extends Model
 
         return $result;
     }
+    public function findChapter($chapterId)
+    {
+       return Chapter::where('doc_id',$this->id)->with(['sections'=>function($q){
+            $q->oldest('id')->with('users');
+        },'users'])->find($chapterId);
+    }
 }

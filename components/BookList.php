@@ -7,6 +7,8 @@ use Jc91715\Book\Models\Chapter;
 
 class BookList extends ComponentBase
 {
+
+    public $doc;
     public function componentDetails()
     {
         return [
@@ -48,31 +50,30 @@ class BookList extends ComponentBase
     {
         return Page::sortBy('baseFileName')->lists('baseFileName', 'baseFileName');
     }
+
+    public function init()
+    {
+        $doc_id = $this->property('doc_id');
+        $this->doc = Doc::findOrFail($doc_id);
+    }
     public function onRun()
     {
         $this->addCss('assets/css/doc.css');
         $this->addJs('assets/css/doc.js');
-        $doc_id = $this->property('doc_id');
-        $doc=Doc::find($doc_id);
-        if(!$doc){
-            $this->setStatusCode(404);
-            return $this->controller->run('404');
-        }
-
-        $chapter_id = $this->property('chapter_id');
-        $chapter =  $chapter = Chapter::where('doc_id',$doc_id)->with(['sections'=>function($q){
-            $q->oldest('id')->with('users');
-        },'users'])->find($chapter_id);
-
-        $this->page['chapter']='';
-        if($chapter){
-            $this->page['chapter']=$chapter;
-        }
-
-        $chapters = $doc->chapters()->getNested();
-        $this->page['chapters']=$chapters;
         $this->page['translatePage']=$this->property('translatePage');
-        $this->page['sectionsPage']=$this->property('sectionsPage');//没有用到
+//        $this->page['sectionsPage']=$this->property('sectionsPage');//没有用到
 
+    }
+
+    public function chapter()
+    {
+        $chapter_id = $this->property('chapter_id');
+
+        return $this->doc->findChapter($chapter_id);
+    }
+
+    public function chapters()
+    {
+        return $this->doc->chapters()->getNested();
     }
 }
