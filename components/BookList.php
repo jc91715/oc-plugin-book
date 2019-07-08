@@ -9,6 +9,7 @@ class BookList extends ComponentBase
 {
 
     public $doc;
+    public $chapter;
     public function componentDetails()
     {
         return [
@@ -67,9 +68,12 @@ class BookList extends ComponentBase
 
     public function chapter()
     {
+        if($this->chapter){
+            return $this->chapter;
+        }
         $chapter_id = $this->property('chapter_id');
 
-        return $this->doc->findChapter($chapter_id);
+        return $this->chapter=$this->doc->findChapter($chapter_id);
     }
 
     public function chapters()
