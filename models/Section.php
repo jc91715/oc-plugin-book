@@ -330,7 +330,7 @@ class Section extends Model
         }
     }
 
-    public function getContentHtml()
+    public function getContentHtmlAttribute($val)
     {
         return str_replace('<code>','<code class="prettyprint">',str_replace('<pre>','<pre class="prettyprint">',$val));
 
