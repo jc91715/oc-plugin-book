@@ -329,4 +329,10 @@ class Section extends Model
             $pivot->save();
         }
     }
+
+    public function getContentHtml()
+    {
+        return str_replace('<code>','<code class="prettyprint">',str_replace('<pre>','<pre class="prettyprint">',$val));
+
+    }
 }
