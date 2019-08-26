@@ -19,7 +19,7 @@ columns:
     user_email:
         label: 用户
         relation: user
-        select: name
+        select: email
 
 
 
