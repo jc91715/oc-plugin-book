@@ -16,6 +16,10 @@ columns:
         select: title
     state:
         label: 状态
+    user_email:
+        label: 用户
+        relation: user
+        select: name
 
 
 
