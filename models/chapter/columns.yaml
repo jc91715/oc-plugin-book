@@ -6,6 +6,10 @@ columns:
     id:
         label: ID
         searchable: true
+    user_email:
+        label: 用户
+        relation: user
+        select: email
     doc:
         label: 文档
         relation: doc
@@ -17,10 +21,7 @@ columns:
         searchable: true
     state:
         label: 状态
-    user_email:
-        label: 用户
-        relation: user
-        select: email
+
     if_total_translate:
         label: 是否整块翻译
     section_number:

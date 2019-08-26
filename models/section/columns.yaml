@@ -6,6 +6,10 @@ columns:
     id:
         label: ID
         searchable: true
+    user_email:
+        label: 用户
+        relation: user
+        select: email
     doc_name:
         label: 所属文档
         relation: doc
@@ -16,10 +20,7 @@ columns:
         select: title
     state:
         label: 状态
-    user_email:
-        label: 用户
-        relation: user
-        select: email
+
 
 
 
