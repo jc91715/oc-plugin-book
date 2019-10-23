@@ -5,7 +5,9 @@
              {% set chapter = __SELF__.chapter()%}
              <div class="col-md-3 col-display" >
                  <ul class="docs-sidebar-toc">
+                     {% chapter %}
                      {% partial 'BookList::sidebar' chapters=chapters %}
+                     {% endif %}
                  </ul>
              </div>
              <div class="col-md-9">
