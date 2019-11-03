@@ -339,6 +339,7 @@ class Section extends Model
     }
      public  function getRandomString($len, $chars=null)
     {
+        usleep(1);
         if (is_null($chars)) {
             $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         }
