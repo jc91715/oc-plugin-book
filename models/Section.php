@@ -339,7 +339,6 @@ class Section extends Model
     }
      public  function getRandomString($len, $chars=null)
     {
-        usleep(1);
         if (is_null($chars)) {
             $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         }
@@ -347,6 +346,8 @@ class Section extends Model
         mt_srand(10000000*(double)microtime());
         for ($i = 0, $str = '', $lc = strlen($chars)-1; $i < $len; $i++) {
             $str .= $chars[mt_rand(0, $lc)];
+            usleep(1);
+
         }
         return $str;
     }
