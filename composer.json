@@ -1,0 +1,5 @@
+{
+    "require": {
+        "godruoyi/php-snowflake": "^1.0"
+    }
+}

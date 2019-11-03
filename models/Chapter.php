@@ -3,7 +3,8 @@
 use Model;
 use Markdown;
 use RainLab\User\Models\User;
-use Jc91715\Book\Classes\Snowflake;
+use Godruoyi\Snowflake\Snowflake;
+
 /**
  * Chapter Model
  */

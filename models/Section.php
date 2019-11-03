@@ -1,6 +1,6 @@
 <?php namespace Jc91715\Book\Models;
 
-use Jc91715\Book\Classes\Snowflake;
+use Godruoyi\Snowflake\Snowflake;
 use Model;
 use Markdown;
 
