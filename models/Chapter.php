@@ -3,6 +3,7 @@
 use Model;
 use Markdown;
 use RainLab\User\Models\User;
+use Jc91715\Book\Classes\Snowflake;
 /**
  * Chapter Model
  */
@@ -356,6 +357,7 @@ class Chapter extends Model
 
     public  function getRandomString($len, $chars=null)
     {
+        return (new Snowflake())->id();
         if (is_null($chars)) {
             $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         }

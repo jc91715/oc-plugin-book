@@ -1,5 +1,6 @@
 <?php namespace Jc91715\Book\Models;
 
+use Jc91715\Book\Classes\Snowflake;
 use Model;
 use Markdown;
 
@@ -339,6 +340,7 @@ class Section extends Model
     }
      public  function getRandomString($len, $chars=null)
     {
+        return (new Snowflake())->id();
         if (is_null($chars)) {
             $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         }
