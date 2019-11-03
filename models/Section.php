@@ -332,7 +332,9 @@ class Section extends Model
 
     public function getContentHtmlAttribute($val)
     {
-        return str_replace('<code>','<code class="prettyprint">',str_replace('<pre>','<pre class="prettyprint">',$val));
+        $val=str_replace('<code>','<code class="prettyprint">',str_replace('<pre>','<pre class="prettyprint">',$val));
+
+        return str_replace('<h6>', '<h6 id="aaa'.mt_rand().'">', str_replace('<h5>', '<h5 id="aaa'.mt_rand().'">', str_replace('<h4>', '<h4 id="aaa'.mt_rand().'">', str_replace('<h3>', '<h3 id="aaa'.mt_rand().'">', str_replace('<h2>', '<h2 id="aaa'.mt_rand().'">', str_replace('<h1>', '<h1 id="aaa'.mt_rand().'">', $val))))));
 
     }
 }
