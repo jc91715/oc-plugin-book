@@ -97,7 +97,7 @@ class Plugin extends PluginBase
 
 
             return [
-                'provider' => '--来自文档', // The badge to display for this result
+                'provider' => '--来自中文文档', // The badge to display for this result
                 'results'  => $results,
             ];
         });
@@ -136,7 +136,7 @@ class Plugin extends PluginBase
 
 
             return [
-                'provider' => '--来自文档', // The badge to display for this result
+                'provider' => '--来自中文文档', // The badge to display for this result
                 'results'  => $results,
             ];
         });
