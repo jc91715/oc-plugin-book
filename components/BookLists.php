@@ -32,7 +32,7 @@ class BookLists extends ComponentBase
     public function onRun()
     {
         $docs = Doc::oldest('id')->with(['chapters'=>function($query){
-            $query->oldest('updated_at')->limit(1);
+            $query->oldest('updated_at');
         }])->get();
         $this->page['docs'] = $docs;
         $this->page['chapterPage']=$this->property('chapterPage');
