@@ -6,10 +6,11 @@
                     <a href="{{chapterPage| page({ doc_id:doc.id })}}" class="list-group-item">
                         {{doc.name}}
                     </a>
+                    <p class="info" style="font-size:16px;">
+                        创建与 {{ doc.created_at.diffForHumans }}，更新于{{ post.updated_at.diffForHumans }}
+                    </p>
                 {% endfor %}
-                <p class="info" style="font-size:16px;">
-                    创建与 {{ doc.created_at.diffForHumans }}，更新于{{ post.updated_at.diffForHumans }}
-                </p>
+
             </div>
         </div>
     </div>
