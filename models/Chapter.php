@@ -68,7 +68,7 @@ class Chapter extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable=['content','origin','history_content'];
+    protected $fillable=['content','origin','history_content','doc_id'];
 
 
     protected $appends = ['stateDesc','stateType'];
