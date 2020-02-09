@@ -13,6 +13,7 @@ class Chapter extends Model
     use \October\Rain\Database\Traits\SoftDelete;
     use \October\Rain\Database\Traits\Revisionable;
 
+    protected $fillable=['content','origin','history_content'];
     //正在翻译的数量限制
     const TRANSLATING_COUNT_LIMIT=1;
     //正在审阅的数量限制
