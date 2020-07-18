@@ -8,3 +8,5 @@ columns:
         searchable: true
     name:
         label: 文档名字
+    if_need_translate:
+        label: 是否需要翻译

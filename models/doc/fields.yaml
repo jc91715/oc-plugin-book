@@ -5,6 +5,12 @@
 fields:
     name:
         label: 文档名字
+        span: auto
+    if_need_translate:
+        label: 是否需要翻译
+        span: auto
+        type: checkbox
+        default: 0
 
 
 tabs:

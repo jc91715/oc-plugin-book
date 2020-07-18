@@ -3,6 +3,7 @@
          <div class="row ">
              {% set chapters = __SELF__.chapters()%}
              {% set chapter = __SELF__.chapter()%}
+             {% set doc = __SELF__.doc%}
              <div class="col-md-3 col-display" >
                  <ul class="docs-sidebar-toc">
                      {% if chapter %}
@@ -15,12 +16,12 @@
                  <div class="md-content js-toc-content">
                      {% if chapter %}
                          {% if chapter.if_total_translate %}
-                            {% partial 'BookList::chapter' chapter=chapter %}
+                            {% partial 'BookList::chapter' chapter=chapter doc=doc %}
                          {% else %}
-                            {% partial 'BookList::section' chapter=chapter %}
+                            {% partial 'BookList::section' chapter=chapter doc=doc %}
                          {% endif %}
                      {% else %}
-                        {% partial 'BookList::instruction' chapters=chapters %}
+                        {% partial 'BookList::instruction' chapters=chapters doc=doc %}
                      {% endif %}
 
                  </div>
