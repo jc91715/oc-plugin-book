@@ -61,6 +61,10 @@ class BookList extends ComponentBase
     {
         $this->addCss('assets/css/doc.css');
         $this->addJs('assets/css/doc.js');
+        $this->addCss('https://cdn.jsdelivr.net/npm/video.js@7.6.6/dist/video-js.min.css');
+        $this->addJs('https://cdn.jsdelivr.net/npm/video.js@7.6.6/dist/video.min.js');
+        $this->addJs('https://cdn.jsdelivr.net/npm/videojs-hotkeys@0.2.25/videojs.hotkeys.min.js');
+        $this->addJs('assets/css/video.js');
         $this->page['translatePage']=$this->property('translatePage');
 //        $this->page['sectionsPage']=$this->property('sectionsPage');//没有用到
 

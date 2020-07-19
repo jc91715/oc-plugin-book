@@ -13,6 +13,7 @@ tabs:
             - preview
             type: partial
             tab: 分块内容
+
         title:
             tab: 内容
             label: 标题
@@ -35,6 +36,14 @@ tabs:
             tab: 内容
             label: 翻译内容
             type: RainLab\Blog\FormWidgets\BlogMarkdown
+        videos:
+            span: full
+            path: $/jc91715/book/controllers/chapters/_field_videos.htm
+            context:
+                - update
+                - preview
+            type: partial
+            tab: 视频内容
         history:
             tab: '修改历史'
             label: '历史记录'

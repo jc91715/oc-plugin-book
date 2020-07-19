@@ -2,15 +2,6 @@
 #  Relation Behavior Config
 # ===================================
 
-sections:
-    label: 分块内容
-    view:
-        list: $/jc91715/book/models/section/columns.yaml
-        showSearch: true
-        toolbarButtons: create|delete
-    manage:
-        form: $/jc91715/book/models/section/fields.yaml
-        recordsPerPage: 10
 videos:
     label: 视频内容
     view:

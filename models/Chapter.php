@@ -14,42 +14,42 @@ class Chapter extends Model
     use \October\Rain\Database\Traits\Revisionable;
 
     //正在翻译的数量限制
-    const TRANSLATING_COUNT_LIMIT=1;
+    const TRANSLATING_COUNT_LIMIT = 1;
     //正在审阅的数量限制
-    const REVIEWING_COUNT_LIMIT=2;
+    const REVIEWING_COUNT_LIMIT = 2;
     //正在重译的数量
-    const RE_TRANSLATING_COUNT_LIMIT=1;
+    const RE_TRANSLATING_COUNT_LIMIT = 1;
     //正在改进的数量
-    const IMPROVING_COUNT_LIMIT=1;
+    const IMPROVING_COUNT_LIMIT = 1;
 
-    const STATE_NO_CLAIM='no_claim';
-    const STATE_TRANSLATING='translating';
-    const STATE_REVIEWING='reviewing';
-    const STATE_UNFINISHED_TRANSLATION='unfinished_translation';
-    const STATE_FINISHED_TRANSLATION='finished_translation';
-    const STATE_RE_TRANSLATING='re_translating';
-    const STATE_IMPROVING='improving';
+    const STATE_NO_CLAIM = 'no_claim';
+    const STATE_TRANSLATING = 'translating';
+    const STATE_REVIEWING = 'reviewing';
+    const STATE_UNFINISHED_TRANSLATION = 'unfinished_translation';
+    const STATE_FINISHED_TRANSLATION = 'finished_translation';
+    const STATE_RE_TRANSLATING = 're_translating';
+    const STATE_IMPROVING = 'improving';
 
     public static $stateMaps = [
-        ''=>'',
-        self::STATE_NO_CLAIM=>'我要翻译',
-        self::STATE_TRANSLATING=>'正在翻译中...',
-        self::STATE_REVIEWING=>'正在审阅中...',
-        self::STATE_UNFINISHED_TRANSLATION=>'翻译未完成，继续翻译...',
-        self::STATE_FINISHED_TRANSLATION=>'翻译已完成',
-        self::STATE_RE_TRANSLATING=>'正在重译中',
-        self::STATE_IMPROVING=>'正在改进中',
+        ''                                 => '',
+        self::STATE_NO_CLAIM               => '我要翻译',
+        self::STATE_TRANSLATING            => '正在翻译中...',
+        self::STATE_REVIEWING              => '正在审阅中...',
+        self::STATE_UNFINISHED_TRANSLATION => '翻译未完成，继续翻译...',
+        self::STATE_FINISHED_TRANSLATION   => '翻译已完成',
+        self::STATE_RE_TRANSLATING         => '正在重译中',
+        self::STATE_IMPROVING              => '正在改进中',
     ];
 
     public static $stateActionMaps = [
-        ''=>'',
-        self::STATE_NO_CLAIM=>'未认领',
-        self::STATE_TRANSLATING=>'%s-%s:正在翻译中...',
-        self::STATE_REVIEWING=>'%s-%s:提交了审阅...',
-        self::STATE_UNFINISHED_TRANSLATION=>'%s-%s:审阅失败，翻译未完成.',
-        self::STATE_FINISHED_TRANSLATION=>'%s-%s：审阅成功， 翻译已完成',
-        self::STATE_RE_TRANSLATING=>'%s-%s：正在重译中',
-        self::STATE_IMPROVING=>'%s-%s：正在改进中',
+        ''                                 => '',
+        self::STATE_NO_CLAIM               => '未认领',
+        self::STATE_TRANSLATING            => '%s-%s:正在翻译中...',
+        self::STATE_REVIEWING              => '%s-%s:提交了审阅...',
+        self::STATE_UNFINISHED_TRANSLATION => '%s-%s:审阅失败，翻译未完成.',
+        self::STATE_FINISHED_TRANSLATION   => '%s-%s：审阅成功， 翻译已完成',
+        self::STATE_RE_TRANSLATING         => '%s-%s：正在重译中',
+        self::STATE_IMPROVING              => '%s-%s：正在改进中',
     ];
 
     protected $dates = ['deleted_at'];
@@ -68,27 +68,27 @@ class Chapter extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable=['content','origin','history_content','doc_id'];
+    protected $fillable = ['content', 'origin', 'history_content', 'doc_id'];
 
 
-    protected $appends = ['stateDesc','stateType'];
+    protected $appends = ['stateDesc', 'stateType'];
     /**
      * @var array Relations
      */
     public $hasOne = [];
     public $hasMany = [
-        'sections'=>Section::class,
+        'sections'       => Section::class,
         'sections_count' => [
             Section::class,
-            'count'=>true
+            'count' => true
         ]
     ];
     public $belongsTo = [
-        'doc'=>[
+        'doc'  => [
             Doc::class,
             'key' => 'doc_id'
         ],
-        'user'=>[
+        'user' => [
             User::class,
 
         ]
@@ -103,31 +103,30 @@ class Chapter extends Model
     public $morphOne = [];
     public $morphMany = [
         'revision_history' => ['System\Models\Revision', 'name' => 'revisionable'],
+        'videos'           => [Video::class, 'name' => 'videoable']
     ];
     public $morphToMany = [
-        'users'  => [
+        'users' => [
             User::class,
-            'name' => 'userable',
-            'table'=> 'jc91715_book_user_chapters',
-            'timestamps'=>'true',
-            'pivot'=>['claim_time','submit_to_review_time','extra','state','review_id'],
-            ]
+            'name'       => 'userable',
+            'table'      => 'jc91715_book_user_chapters',
+            'timestamps' => 'true',
+            'pivot'      => ['claim_time', 'submit_to_review_time', 'extra', 'state', 'review_id'],
+        ]
     ];
     public $attachOne = [];
     public $attachMany = [];
 
 
-
-
     public function beforeSave()
     {
-        if(!$this->slug){
-            $this->slug = uniqid().time();
+        if (!$this->slug) {
+            $this->slug = uniqid() . time();
         }
 
 
         $this->content_html = self::formatHtml($this->content);
-        $this->origin_html = self::formatHtml($this->origin);
+        $this->origin_html  = self::formatHtml($this->origin);
         $this->history_html = self::formatHtml($this->history_content);
     }
 
@@ -141,13 +140,15 @@ class Chapter extends Model
 
         return $result;
     }
+
     public function getSectionCountAttribute()
     {
         return optional($this->sections()->get())->count() ?? 0;
     }
+
     public function scopeFilterBooks($query, $books)
     {
-        return $query->whereHas('doc', function($q) use ($books) {
+        return $query->whereHas('doc', function ($q) use ($books) {
             $q->whereIn('id', $books);
         });
     }
@@ -161,86 +162,98 @@ class Chapter extends Model
     {
         return static::$stateMaps[$this->state];
     }
+
     public function getChapterUserCountAttribute()
     {
-        return  $this->users()->get()->count();
+        return $this->users()->get()->count();
     }
+
     public function getSectionUserCountAttribute()
     {
-        $count=0;
-        $sections =  $this->sections()->with('users')->whereHas('users')->get();
-        $sections->each(function($section)use(&$count){
-            $count+=$section->users->count();
+        $count    = 0;
+        $sections = $this->sections()->with('users')->whereHas('users')->get();
+        $sections->each(function ($section) use (&$count) {
+            $count += $section->users->count();
         });
         return $count;
     }
+
     public function getRateProgressAttribute()
     {
-        if(!$this->section_number){
+        if (!$this->section_number) {
             return '0%';
         }
-        return (round($this->translate_section_number/$this->section_number,2)*100).'%';
+        return (round($this->translate_section_number / $this->section_number, 2) * 100) . '%';
     }
+
     public function getStateTypeAttribute()
     {
         $arr = [];
-        switch ($this->state){
+        switch ($this->state) {
             case '':
-                $arr[]=['type'=>self::STATE_TRANSLATING,'desc'=>'我要翻译','link'=>true];
+                $arr[] = ['type' => self::STATE_TRANSLATING, 'desc' => '我要翻译', 'link' => true];
                 break;
             case self::STATE_NO_CLAIM:
-                $arr[]=['type'=>self::STATE_TRANSLATING,'desc'=>'我要翻译','link'=>true];
+                $arr[] = ['type' => self::STATE_TRANSLATING, 'desc' => '我要翻译', 'link' => true];
                 break;
             case self::STATE_UNFINISHED_TRANSLATION:
-                $arr[]=['type'=>self::STATE_RE_TRANSLATING,'desc'=>'重译','link'=>true];
+                $arr[] = ['type' => self::STATE_RE_TRANSLATING, 'desc' => '重译', 'link' => true];
                 break;
             case self::STATE_FINISHED_TRANSLATION:
 
-                $arr[]=['type'=>self::STATE_IMPROVING,'desc'=>'改进','link'=>true];
-                $arr[]=['type'=>self::STATE_RE_TRANSLATING,'desc'=>'重译','link'=>true];
+                $arr[] = ['type' => self::STATE_IMPROVING, 'desc' => '改进', 'link' => true];
+                $arr[] = ['type' => self::STATE_RE_TRANSLATING, 'desc' => '重译', 'link' => true];
                 break;
             default:
                 break;
         }
-        if(empty($arr)){
+        if (empty($arr)) {
             return null;
         }
         return $arr;
     }
-    public  function verifyType($type)
+
+    public function verifyType($type)
     {
-        return in_array($type,[self::STATE_TRANSLATING,self::STATE_RE_TRANSLATING,self::STATE_IMPROVING]);
+        return in_array($type, [self::STATE_TRANSLATING, self::STATE_RE_TRANSLATING, self::STATE_IMPROVING]);
     }
+
     public function canTranslated()
     {
-        return in_array($this->state,['',self::STATE_NO_CLAIM,self::STATE_FINISHED_TRANSLATION,self::STATE_UNFINISHED_TRANSLATION]);
+        return in_array($this->state, ['', self::STATE_NO_CLAIM, self::STATE_FINISHED_TRANSLATION, self::STATE_UNFINISHED_TRANSLATION]);
     }
+
     public function canReview()
     {
-        return $this->state==self::STATE_REVIEWING;
+        return $this->state == self::STATE_REVIEWING;
 
     }
+
     public function hasTranslatingCount($user)
     {
-        return static::newQuery()->where('user_id',$user->id)->where('state',self::STATE_TRANSLATING)->get()->count();
+        return static::newQuery()->where('user_id', $user->id)->where('state', self::STATE_TRANSLATING)->get()->count();
     }
+
     public function hasReviewingCount($user)
     {
-        return static::newQuery()->where('user_id',$user->id)->where('state',self::STATE_REVIEWING)->get()->count();
+        return static::newQuery()->where('user_id', $user->id)->where('state', self::STATE_REVIEWING)->get()->count();
     }
+
     public function hasReTranslatingCount($user)
     {
-        return static::newQuery()->where('user_id',$user->id)->where('state',self::STATE_RE_TRANSLATING)->get()->count();
+        return static::newQuery()->where('user_id', $user->id)->where('state', self::STATE_RE_TRANSLATING)->get()->count();
     }
+
     public function hasImprovingCount($user)
     {
-        return static::newQuery()->where('user_id',$user->id)->where('state',self::STATE_IMPROVING)->get()->count();
+        return static::newQuery()->where('user_id', $user->id)->where('state', self::STATE_IMPROVING)->get()->count();
     }
-    public function translating($user,$type='')
+
+    public function translating($user, $type = '')
     {
-        switch ($type){
+        switch ($type) {
             case self::STATE_TRANSLATING:
-                if(!$this->state||$this->state==self::STATE_NO_CLAIM){//审阅成功或失败传STATE_TRANSLATING限制进入这里。
+                if (!$this->state || $this->state == self::STATE_NO_CLAIM) {//审阅成功或失败传STATE_TRANSLATING限制进入这里。
                     $this->startTranslating($user);
                 }
                 break;
@@ -254,93 +267,96 @@ class Chapter extends Model
                 break;
         }
     }
+
     public function isTranslating()
     {
-        return in_array($this->state,[self::STATE_TRANSLATING,self::STATE_RE_TRANSLATING,self::STATE_IMPROVING]);
+        return in_array($this->state, [self::STATE_TRANSLATING, self::STATE_RE_TRANSLATING, self::STATE_IMPROVING]);
     }
 
 
     public function startTranslating($user)
     {
-        $this->user_id = $user->id;
-        $this->state = self::STATE_TRANSLATING;
+        $this->user_id    = $user->id;
+        $this->state      = self::STATE_TRANSLATING;
         $this->claim_time = date('Y-m-d H:i:s');
         $this->save();
-        $this->users()->syncWithoutDetaching([$user->id=>['claim_time'=>date('Y-m-d H:i:s'),'state'=>$this->state]]);
+        $this->users()->syncWithoutDetaching([$user->id => ['claim_time' => date('Y-m-d H:i:s'), 'state' => $this->state]]);
 
         $this->recordActionHistory($user);
     }
 
-    public function submitToSave($state,$history_content)
+    public function submitToSave($state, $history_content)
     {
-        $this->state = $state;
+        $this->state           = $state;
         $this->history_content = $history_content;
         $this->save();
 
         $user = User::find($this->user_id);
-        if($user){
+        if ($user) {
             $this->recordActionHistory($user);
         }
 
     }
 
-    public function submitToReviewing($state,$history_content)
+    public function submitToReviewing($state, $history_content)
     {
-        $this->submitToSave($state,$history_content);
-        $this->users()->updateExistingPivot($this->user_id,['submit_to_review_time'=>date('Y-m-d H:i:s'),'state'=>$this->state]);
+        $this->submitToSave($state, $history_content);
+        $this->users()->updateExistingPivot($this->user_id, ['submit_to_review_time' => date('Y-m-d H:i:s'), 'state' => $this->state]);
         //todo 可在这里去给相关审阅人员发送通知
     }
 
     public function startReTranslating($user)
     {
         $this->user_id = $user->id;
-        $this->state = self::STATE_RE_TRANSLATING;
+        $this->state   = self::STATE_RE_TRANSLATING;
         $this->save();
 
-        $this->users()->syncWithoutDetaching([$user->id=>['re_translating_time'=>date('Y-m-d H:i:s'),'state'=>$this->state]]);
+        $this->users()->syncWithoutDetaching([$user->id => ['re_translating_time' => date('Y-m-d H:i:s'), 'state' => $this->state]]);
         $this->recordActionHistory($user);
     }
 
     public function startImproving($user)
     {
         $this->user_id = $user->id;
-        $this->state = self::STATE_IMPROVING;
+        $this->state   = self::STATE_IMPROVING;
         $this->save();
 
-        $this->users()->syncWithoutDetaching([$this->user_id=>['improving_time'=>date('Y-m-d H:i:s'),'state'=>$this->state]]);
+        $this->users()->syncWithoutDetaching([$this->user_id => ['improving_time' => date('Y-m-d H:i:s'), 'state' => $this->state]]);
         $this->recordActionHistory($user);
     }
 
     public function reviewSuccess($user)
     {
-        $this->state=self::STATE_FINISHED_TRANSLATION;
-        $this->content=$this->history_content;
+        $this->state   = self::STATE_FINISHED_TRANSLATION;
+        $this->content = $this->history_content;
         $this->save();
-        $this->users()->syncWithoutDetaching([$this->user_id=>['review_time'=>date('Y-m-d H:i:s'),'state'=>$this->state,'review_id'=>$user->id]]);
+        $this->users()->syncWithoutDetaching([$this->user_id => ['review_time' => date('Y-m-d H:i:s'), 'state' => $this->state, 'review_id' => $user->id]]);
         $this->recordActionHistory($user);
     }
+
     public function reviewFail($user)
     {
-        $this->state=self::STATE_UNFINISHED_TRANSLATION;
+        $this->state = self::STATE_UNFINISHED_TRANSLATION;
         $this->save();
-        $this->users()->syncWithoutDetaching([$this->user_id=>['review_time'=>date('Y-m-d H:i:s'),'state'=>$this->state,'review_id'=>$user->id]]);
+        $this->users()->syncWithoutDetaching([$this->user_id => ['review_time' => date('Y-m-d H:i:s'), 'state' => $this->state, 'review_id' => $user->id]]);
         $this->recordActionHistory($user);
     }
+
     public function recordActionHistory($user)
     {
-        $historyActionString =sprintf(self::$stateActionMaps[$this->state],date('Y-m-d H:i:s'),$user->name.$user->id);
+        $historyActionString = sprintf(self::$stateActionMaps[$this->state], date('Y-m-d H:i:s'), $user->name . $user->id);
 
-        $usesExist = $this->users()->where('user_id',$this->user_id)->first();
+        $usesExist = $this->users()->where('user_id', $this->user_id)->first();
 
-        if($usesExist){
+        if ($usesExist) {
             $pivot = $usesExist->pivot;
             $extra = $pivot->extra;
-            if(!$extra){
+            if (!$extra) {
                 $extra = [];
-            }else{
+            } else {
                 $extra = json_decode($extra);
             }
-            $extra[] = $historyActionString;
+            $extra[]      = $historyActionString;
             $pivot->extra = json_encode($extra);
             $pivot->save();
         }
@@ -350,21 +366,21 @@ class Chapter extends Model
 
     public function getContentHtmlAttribute($val)
     {
-       return $val=str_replace('<code>','<code class="prettyprint">',str_replace('<pre>','<pre class="prettyprint">',$val));
+        return $val = str_replace('<code>', '<code class="prettyprint">', str_replace('<pre>', '<pre class="prettyprint">', $val));
 
-        return str_replace('<h6>', '<h6 id="aaa'.$this->getRandomString(mt_rand(0,50)).'">', str_replace('<h5>', '<h5 id="aaa'.$this->getRandomString(mt_rand(0,50)).'">', str_replace('<h4>', '<h4 id="aaa'.$this->getRandomString(mt_rand(0,50)).'">', str_replace('<h3>', '<h3 id="aaa'.$this->getRandomString(mt_rand(0,50)).'">', str_replace('<h2>', '<h2 id="aaa'.$this->getRandomString(mt_rand(0,50)).'">', str_replace('<h1>', '<h1 id="aaa'.$this->getRandomString(mt_rand(0,50)).'">', $val))))));
+        return str_replace('<h6>', '<h6 id="aaa' . $this->getRandomString(mt_rand(0, 50)) . '">', str_replace('<h5>', '<h5 id="aaa' . $this->getRandomString(mt_rand(0, 50)) . '">', str_replace('<h4>', '<h4 id="aaa' . $this->getRandomString(mt_rand(0, 50)) . '">', str_replace('<h3>', '<h3 id="aaa' . $this->getRandomString(mt_rand(0, 50)) . '">', str_replace('<h2>', '<h2 id="aaa' . $this->getRandomString(mt_rand(0, 50)) . '">', str_replace('<h1>', '<h1 id="aaa' . $this->getRandomString(mt_rand(0, 50)) . '">', $val))))));
 
     }
 
-    public  function getRandomString($len, $chars=null)
+    public function getRandomString($len, $chars = null)
     {
 
         if (is_null($chars)) {
             $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         }
         $chars = str_shuffle($chars);
-        mt_srand(10000000*(double)microtime());
-        for ($i = 0, $str = '', $lc = strlen($chars)-1; $i < $len; $i++) {
+        mt_srand(10000000 * (double)microtime());
+        for ($i = 0, $str = '', $lc = strlen($chars) - 1; $i < $len; $i++) {
             usleep(1);
 
             $str .= $chars[mt_rand(0, $lc)];

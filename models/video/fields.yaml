@@ -1,0 +1,29 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: 视频名称
+        span: auto
+    link:
+        label: 视频链接
+        span: auto
+    if_display:
+        label: 是否展示
+        span: auto
+        type: checkbox
+        default: 0
+    sort_order:
+        label: 排序
+        span: auto
+        comment: 越小越靠前
+        default: 100
+    image:
+        label: 封面图
+        type: fileupload
+        mode: image
+        imageWidth: 200
+        imageHeight: 200
+        span: auto
+

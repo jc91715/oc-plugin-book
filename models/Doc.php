@@ -2,6 +2,7 @@
 
 use Model;
 use Markdown;
+
 /**
  * doc Model
  */
@@ -30,9 +31,9 @@ class Doc extends Model
      */
     public $hasOne = [];
     public $hasMany = [
-        'chapters' =>[
+        'chapters' => [
             Chapter::class,
-            'key' => 'doc_id',
+            'key'      => 'doc_id',
             'otherKey' => 'id',
         ]
     ];
@@ -48,7 +49,7 @@ class Doc extends Model
     public function beforeSave()
     {
         $this->content_html = self::formatHtml($this->content);
-        $this->origin_html = self::formatHtml($this->origin);
+        $this->origin_html  = self::formatHtml($this->origin);
     }
 
 
@@ -61,10 +62,15 @@ class Doc extends Model
 
         return $result;
     }
+
     public function findChapter($chapterId)
     {
-       return Chapter::where('doc_id',$this->id)->with(['sections'=>function($q){
-            $q->oldest('id')->with('users');
-        },'users'])->find($chapterId);
+        return Chapter::where('doc_id', $this->id)->with(['sections' => function ($q) {
+            $q->oldest('id')->with(['users', 'videos' => function ($query) {
+                $query->where('if_display', 1)->oldest('sort_order')->with('image');
+            }]);
+        }, 'users'])->with(['videos' => function ($query) {
+            $query->where('if_display', 1)->oldest('sort_order')->with('image');
+        }])->find($chapterId);
     }
 }

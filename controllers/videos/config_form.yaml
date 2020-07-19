@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Video
+
+# Model Form Field configuration
+form: $/jc91715/book/models/video/fields.yaml
+
+# Model Class name
+modelClass: Jc91715\Book\Models\Video
+
+# Default redirect location
+defaultRedirect: jc91715/book/videos
+
+# Create page
+create:
+    title: Create Video
+    redirect: jc91715/book/videos/update/:id
+    redirectClose: jc91715/book/videos
+
+# Update page
+update:
+    title: Edit Video
+    redirect: jc91715/book/videos
+    redirectClose: jc91715/book/videos
+
+# Preview page
+preview:
+    title: Preview Video

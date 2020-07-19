@@ -21,3 +21,6 @@
 1.0.8:
     - add_filed_to_doc_table
     - add_filed_to_doc_table.php
+1.0.9:
+    - create_videos_table
+    - create_videos_table.php
