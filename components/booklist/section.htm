@@ -22,6 +22,7 @@
 <div class="row">
 
     <div class="col-md-8">{{section.content_html | raw}}</div>
+    {% if doc.if_need_translate %}
 
     <div class="col-md-4">
         <button class="btn btn-primary btn-sm" type="button">
@@ -46,6 +47,8 @@
 
         {% endif %}
     </div>
+    {% endif %}
+
     {% if section.videos|length>0 %}
 
     {% for video in section.videos %}
