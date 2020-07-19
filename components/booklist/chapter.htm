@@ -18,7 +18,9 @@
 {% endif %}
 
 <div class="row">
-    {{chapter.content_html|raw}}
+    <div class="col-md-12">
+        {{chapter.content_html|raw}}
+    </div>
 </div>
 
 {% if chapter.videos|length>0 %}
