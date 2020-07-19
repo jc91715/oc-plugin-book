@@ -20,9 +20,9 @@
 {% endif %}
 {% for key,section in chapter.sections %}
 <div class="row">
+    {% if doc.if_need_translate %}
 
     <div class="col-md-8">{{section.content_html | raw}}</div>
-    {% if doc.if_need_translate %}
 
     <div class="col-md-4">
         <button class="btn btn-primary btn-sm" type="button">
@@ -47,6 +47,9 @@
 
         {% endif %}
     </div>
+    {% else%}
+    <div class="col-md-12">{{section.content_html | raw}}</div>
+
     {% endif %}
 
     {% if section.videos|length>0 %}
