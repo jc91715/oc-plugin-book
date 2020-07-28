@@ -18,68 +18,71 @@
         </div>
     </div>
 {% endif %}
-{% for key,section in chapter.sections %}
-<div class="row" style="padding-bottom: 200px">
-    {% if doc.if_need_translate %}
+<div style="padding-bottom: 200px">
 
-    <div class="col-md-8">{{section.content_html | raw}}</div>
+    {% for key,section in chapter.sections %}
+    <div class="row">
+        {% if doc.if_need_translate %}
 
-    <div class="col-md-4">
-        <button class="btn btn-primary btn-sm" type="button">
-            第<span class="badge">{{key+1}}</span>分块
-        </button>
-        <button class="btn btn-primary btn-sm" type="button">
-            参与人数 <span class="badge">{{section.users.count()}}</span>
-        </button>
-        <br>
-        <br>
-        {% if section.stateType %}
-        {% for state in section.stateType %}
-        <a href="{{ translatePage| page({class_type:'sections',slug:section.slug,type:state['type'] })}}" class="btn btn-primary btn-sm active" role="button">{{state['desc']}}</a>
-        {% endfor %}
-        <br>
-        <br>
-        {% else %}
-        <span class="label label-primary">{{section.stateDesc}}</span>
-        <br>
-        <br>
-        <a href="{{ translatePage| page({class_type:'sections',slug:section.slug })}}" class="btn btn-primary btn-sm active" role="button">查看</a>
+        <div class="col-md-8">{{section.content_html | raw}}</div>
+
+        <div class="col-md-4">
+            <button class="btn btn-primary btn-sm" type="button">
+                第<span class="badge">{{key+1}}</span>分块
+            </button>
+            <button class="btn btn-primary btn-sm" type="button">
+                参与人数 <span class="badge">{{section.users.count()}}</span>
+            </button>
+            <br>
+            <br>
+            {% if section.stateType %}
+            {% for state in section.stateType %}
+            <a href="{{ translatePage| page({class_type:'sections',slug:section.slug,type:state['type'] })}}" class="btn btn-primary btn-sm active" role="button">{{state['desc']}}</a>
+            {% endfor %}
+            <br>
+            <br>
+            {% else %}
+            <span class="label label-primary">{{section.stateDesc}}</span>
+            <br>
+            <br>
+            <a href="{{ translatePage| page({class_type:'sections',slug:section.slug })}}" class="btn btn-primary btn-sm active" role="button">查看</a>
+
+            {% endif %}
+        </div>
+        {% else%}
+        <div class="col-md-12">{{section.content_html | raw}}</div>
 
         {% endif %}
-    </div>
-    {% else%}
-    <div class="col-md-12">{{section.content_html | raw}}</div>
 
-    {% endif %}
+        {% if section.videos|length>0 %}
 
-    {% if section.videos|length>0 %}
+        {% for video in section.videos %}
+        <div class="col-md-12">
+            <video
+                class="video-js vjs-default-skin vjs-big-play-centered"
+                controls
+                preload="auto"
+                width=827 height=540
+                poster="{{video.image.path}}"
+                data-setup=""
+            >
+                <source src="{{video.link}}" type="video/mp4" />
+                <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider upgrading to a
+                    web browser that
+                    <a href="https://videojs.com/html5-video-support/" target="_blank"
+                    >supports HTML5 video</a
+                    >
+                </p>
+            </video>
 
-    {% for video in section.videos %}
-    <div class="col-md-12">
-        <video
-            class="video-js vjs-default-skin vjs-big-play-centered"
-            controls
-            preload="auto"
-            width=827 height=540
-            poster="{{video.image.path}}"
-            data-setup=""
-        >
-            <source src="{{video.link}}" type="video/mp4" />
-            <p class="vjs-no-js">
-                To view this video please enable JavaScript, and consider upgrading to a
-                web browser that
-                <a href="https://videojs.com/html5-video-support/" target="_blank"
-                >supports HTML5 video</a
-                >
-            </p>
-        </video>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% if doc.if_need_translate %}
+        {% endif %}
+
 
     </div>
     {% endfor %}
-    {% endif %}
-    {% if doc.if_need_translate %}
-    {% endif %}
-
-
 </div>
-{% endfor %}
