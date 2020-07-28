@@ -19,7 +19,7 @@
     </div>
 {% endif %}
 {% for key,section in chapter.sections %}
-<div class="row">
+<div class="row" style="padding-bottom: 200px">
     {% if doc.if_need_translate %}
 
     <div class="col-md-8">{{section.content_html | raw}}</div>
@@ -60,7 +60,7 @@
             class="video-js vjs-default-skin vjs-big-play-centered"
             controls
             preload="auto"
-            width=960 height=540
+            width=827 height=540
             poster="{{video.image.path}}"
             data-setup=""
         >
