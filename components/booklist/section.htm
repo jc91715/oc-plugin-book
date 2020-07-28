@@ -55,9 +55,9 @@
         {% endif %}
 
         {% if section.videos|length>0 %}
-        <div class="col-md-12"><h3>视频介绍:</h3></div>
         {% for video in section.videos %}
         <div class="col-md-12">
+            <h3>视频介绍--{{video.title}}</h3>
             <video
                 class="video-js vjs-default-skin vjs-big-play-centered"
                 controls
