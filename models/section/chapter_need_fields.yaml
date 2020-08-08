@@ -1,0 +1,22 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+
+tabs:
+    fields:
+        origin:
+            tab: 内容
+            label: 源内容
+            type: RainLab\Blog\FormWidgets\BlogMarkdown
+            context:
+            - create
+        history_content:
+            tab: 内容
+            label: 历史内容
+            type: RainLab\Blog\FormWidgets\BlogMarkdown
+        content:
+            tab: 内容
+            label: 翻译内容
+            type: RainLab\Blog\FormWidgets\BlogMarkdown
+

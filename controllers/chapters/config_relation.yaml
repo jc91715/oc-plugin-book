@@ -9,7 +9,7 @@ sections:
         showSearch: true
         toolbarButtons: create|delete
     manage:
-        form: $/jc91715/book/models/section/fields.yaml
+        form: $/jc91715/book/models/section/chapter_need_fields.yaml
         recordsPerPage: 10
 videos:
     label: 视频内容
