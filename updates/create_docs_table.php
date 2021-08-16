@@ -17,6 +17,7 @@ class CreateDocsTable extends Migration
             $table->longText('origin_html')->nullable();
             $table->longText('content')->nullable();
             $table->longText('content_html')->nullable();
+            $table->boolean('side_is_top')->default(false);
             $table->timestamps();
         });
     }
