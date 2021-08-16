@@ -4,14 +4,14 @@
              {% set chapters = __SELF__.chapters()%}
              {% set chapter = __SELF__.chapter()%}
              {% set doc = __SELF__.doc%}
-             <div class="col-md-3 col-display" >
+             <div class="col-md-{% if doc.side_is_top %}3{% else %}12{% endif %} col-display" >
                  <ul class="docs-sidebar-toc">
                      {% if chapter %}
                      {% partial 'BookList::sidebar' chapters=chapters %}
                      {% endif %}
                  </ul>
              </div>
-             <div class="col-md-9">
+             <div class="col-md-{% if doc.side_is_top %}9{% else %}12{% endif %}">
 <!--                 <p class="display-sidebar"><span class="icon-list"></span></p>-->
                  <div class="md-content js-toc-content">
                      {% if chapter %}
