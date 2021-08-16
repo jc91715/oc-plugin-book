@@ -3,7 +3,7 @@
         {% if(chapter.children.count()>0) %}
             <li class="header">
                 <h4>
-                    {{chapter.title}}
+                    <a href="{{this.page.baseFileName| page({ doc_id:chapter.doc_id, chapter_id:chapter.id })}}"  {% if this.param.chapter_id==chapter.id %} style="color:#bf5329"  {% endif %}>{{chapter.title}}</a>
                 </h4>
                 {% partial 'BookList::sidebar' chapters=chapter.children %}
             </li>
